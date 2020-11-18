@@ -61,10 +61,23 @@ frm[,`:=`(
 	totchol = zoo::na.locf(totchol, fromlast = T),
 	stroke = zoo::na.locf(stroke, fromlast = T)
 )]
-frm <- frm[,.(randid, period, cigpday, bmi, chd, hyperten, cens, totchol, stroke, educ, sex)]
+frm[,`:=`(
+	time = {
+		time[is.na(time) & period == 2] <- time[period == 1]  + 2200
+		time[is.na(time) & period == 3] <- time[period == 2]  + 2200
+		time
+	},
+	age = {
+		age[is.na(age) & period == 2] <- floor(age[period == 1]  + 2200/365)
+		age[is.na(age) & period == 3] <- floor(age[period == 2]  + 2200/365)
+		age
+	}
+	), by = .(randid)]
+
+frm <- frm[,.(randid, time, age, period, cigpday, bmi, chd, hyperten, cens, totchol, stroke, educ, sex)]
 
 frm.wide <- dcast(
 	frm, randid ~ period,
-	value.var = c("cigpday", "bmi", "chd", "hyperten", "cens", "totchol", "stroke"))
+	value.var = c("time", "age", "cigpday", "bmi", "chd", "hyperten", "cens", "totchol", "stroke"))
 
 frm.wide <- merge(frm.wide, frm[,.(educ = educ[1], sex = sex[1]), by = .(randid)], on = "randid")

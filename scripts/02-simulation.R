@@ -54,6 +54,7 @@ sex <- ifelse(runif(n) > 0.55, 0, 1)
 
 # Fit models to find parameters for simulation
 for (k in 1:3) {
+	c("chd", "hyp", "")
 	assign(paste0("mod_", "chd", "_", k),
 				 glm(as.formula(paste0(
 				 	paste0("chd", "_", k, " ~ "),
