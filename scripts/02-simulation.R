@@ -54,13 +54,13 @@ sex <- ifelse(runif(n) > 0.55, 0, 1)
 
 # Fit models to find parameters for simulation
 for (k in 1:3) {
-	assign(paste0("mod", "chd", "_", k),
+	assign(paste0("mod_", "chd", "_", k),
 				 glm(as.formula(paste0(
-				 	"chd ~ ",
+				 	paste0("chd", "_", k, " ~ "),
 				 	paste(c("educ", "sex",
-				 					paste0("stroke_", k:1),
+				 					paste0("stroke_", k),
 				 					if (k > 1) {
-				 		as.vector(sapply((k - 1):1, function(x) {paste0(c("chd", "hyp", "cens"), "_", x)}))
+				 		paste0(c("chd", "hyperten", "cens"), "_", k - 1)
 				 		}),
 				 				collapse = " + "))),
 				 	"binomial",

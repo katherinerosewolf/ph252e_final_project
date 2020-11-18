@@ -24,7 +24,7 @@ prevalent.who <- unique(frm[prevstrk == 1 & period == 1, randid])
 frm <- frm[!randid %in% prevalent.who, ]
 
 # Treatments
-frm[, `:=`(totchol = ifelse(totchol < 125 | totchol > 200, 1, 0))]
+frm[, `:=`(totchol = as.numeric(ifelse(totchol < 125 | totchol > 200, 1, 0)))]
 names(frm)[grep("anychd", names(frm))] <- "chd"
 
 # Make outcomes time-varying
@@ -36,6 +36,21 @@ frm[timeap > endtime | stroke == 1, cens := 0]
 frm[timeap <= endtime, cens := 1]
 frm[timechd > endtime, anychd := 0]
 frm[timehyp > endtime, hyperten := 0]
+
+# Impute where NA
+frm[,`:=`(
+	educ = zoo::na.locf(educ),
+	cigpday = zoo::na.locf(cigpday),
+	bmi = zoo::na.locf(bmi),
+	totchol = zoo::na.locf(totchol)
+)]
+frm[,`:=`(
+	educ = zoo::na.locf(educ, fromlast = T),
+	cigpday = zoo::na.locf(cigpday, fromlast = T),
+	bmi = zoo::na.locf(bmi, fromlast = T),
+	totchol = zoo::na.locf(totchol, fromlast = T)
+)]
+frm <- frm[,.(randid, period, cigpday, bmi, chd, hyperten, cens, totchol, stroke, educ, sex)]
 
 frm.wide <- dcast(
 	frm, randid ~ period,
