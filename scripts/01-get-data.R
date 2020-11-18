@@ -10,6 +10,7 @@ source(here::here("scripts", "00-preliminaries.R"))
 frm <- read.csv(here::here("data", "frmgham2.csv"))
 frm <- as.data.table(frm)
 names(frm) <- tolower(names(frm))
+frm <- merge(frm, frm[,.(period = 1:3), by = .(randid)], on = "randid", all = T)
 
 str(frm)
 length(unique(frm$randid))
@@ -39,16 +40,26 @@ frm[timehyp > endtime, hyperten := 0]
 
 # Impute where NA
 frm[,`:=`(
+	sex = zoo::na.locf(sex),
 	educ = zoo::na.locf(educ),
 	cigpday = zoo::na.locf(cigpday),
 	bmi = zoo::na.locf(bmi),
-	totchol = zoo::na.locf(totchol)
+	chd = zoo::na.locf(chd),
+	hyperten = zoo::na.locf(hyperten),
+	cens = zoo::na.locf(cens),
+	totchol = zoo::na.locf(totchol),
+	stroke = zoo::na.locf(stroke)
 )]
 frm[,`:=`(
+	sex = zoo::na.locf(sex, fromlast = T),
 	educ = zoo::na.locf(educ, fromlast = T),
 	cigpday = zoo::na.locf(cigpday, fromlast = T),
 	bmi = zoo::na.locf(bmi, fromlast = T),
-	totchol = zoo::na.locf(totchol, fromlast = T)
+	chd = zoo::na.locf(chd, fromlast = T),
+	hyperten = zoo::na.locf(hyperten, fromlast = T),
+	cens = zoo::na.locf(cens, fromlast = T),
+	totchol = zoo::na.locf(totchol, fromlast = T),
+	stroke = zoo::na.locf(stroke, fromlast = T)
 )]
 frm <- frm[,.(randid, period, cigpday, bmi, chd, hyperten, cens, totchol, stroke, educ, sex)]
 

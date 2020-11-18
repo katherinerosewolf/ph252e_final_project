@@ -57,7 +57,7 @@ for (k in 1:3) {
 	assign(paste0("mod_", "chd", "_", k),
 				 glm(as.formula(paste0(
 				 	paste0("chd", "_", k, " ~ "),
-				 	paste(c("educ", "sex",
+				 	paste(c("factor(educ)", "sex",
 				 					paste0("stroke_", k),
 				 					if (k > 1) {
 				 		paste0(c("chd", "hyperten", "cens"), "_", k - 1)
