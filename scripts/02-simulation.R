@@ -55,7 +55,7 @@ sex <- ifelse(runif(n) > 0.55, 0, 1)
 # Fit models to find parameters for simulation
 for (k in 1:3) {
 	assign(paste0("mod", "chd", "_", k),
-				 glm())
+				 glm(paste0("anychd ~ ")))
 	assign(paste0("hyp", "_", k), rgamma(n, 40, 1.5))
 	assign(paste0("cens", "_", k), rnorm(n, 20, 5))
 	assign(paste0("A", "_", k), rgamma(n, 40, 1.5))

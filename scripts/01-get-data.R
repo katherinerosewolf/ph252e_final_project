@@ -25,7 +25,7 @@ frm <- frm[!randid %in% prevalent.who, ]
 
 # Treatments
 frm[, `:=`(totchol = ifelse(totchol < 125 | totchol > 200, 1, 0))]
-frm
+names(frm)[grep("anychd", names(frm))] <- "chd"
 
 # Make outcomes time-varying
 frm[,`:=`(endtime = shift(time, -1)), by = .(randid)]
