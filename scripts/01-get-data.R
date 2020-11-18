@@ -39,6 +39,6 @@ frm[timehyp > endtime, hyperten := 0]
 
 frm.wide <- dcast(
 	frm, randid ~ period,
-	value.var = c("cigpday", "bmi", "anychd", "hyperten", "cens", "totchol", "stroke"))
+	value.var = c("cigpday", "bmi", "chd", "hyperten", "cens", "totchol", "stroke"))
 
 frm.wide <- merge(frm.wide, frm[,.(educ = educ[1], sex = sex[1]), by = .(randid)], on = "randid")
