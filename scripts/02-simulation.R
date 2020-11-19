@@ -80,7 +80,8 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 					paste0(c("chd", "hyperten"), "_", k),
 					paste0("totchol_", (k - 1))
 					)
-			})
+			}
+			)
 	})
 
 	A.pred <- lapply(1:3, function(k) {
@@ -180,7 +181,8 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 						 	get(paste0("U_", x, "_", k), envir = .FunEnv) <
 						 		predict(
 						 			get(paste0("mod_", x, "_", k), envir = .FunEnv),
-						 			newdata = as.data.frame(sapply(L.pred[[k]], get, envir = .FunEnv, simplify = F)))),
+						 			newdata = as.data.frame(sapply(L.pred[[k]], get, envir = .FunEnv, simplify = F)),
+						 			type = "response")),
 						 envir = .FunEnv
 			)}
 		)
@@ -188,12 +190,14 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 					 get(paste0("U_bmi_", k), envir = .FunEnv) +
 					 	predict(
 					 		get(paste0("mod_bmi_", k), envir = .FunEnv),
-					 		newdata = as.data.frame(sapply(L.pred[[k]], get, envir = .FunEnv, simplify = F))),
+					 		newdata = as.data.frame(sapply(L.pred[[k]], get, envir = .FunEnv, simplify = F)),
+						 			type = "response"),
 					 envir = .FunEnv
 		)
 		cigpday <- get(paste0("U_cigpday_", k), envir = .FunEnv)[[2]] +
 					 	predict(get(paste0("mod_cigpday_", k), envir = .FunEnv),
-					 		newdata = as.data.frame(sapply(L.pred[[k]], get, envir = .FunEnv, simplify = F)))
+					 		newdata = as.data.frame(sapply(L.pred[[k]], get, envir = .FunEnv, simplify = F)),
+						 			type = "response")
 		nocigs <- as.numeric(get(paste0("U_cigpday_", k), envir = .FunEnv)[[1]] <= 0.07)
 		cigpday[nocigs] <- 0
 		cigpday <- round(cigpday)
@@ -201,15 +205,16 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 					 cigpday,
 					 envir = .FunEnv
 		)
-		assign(paste0("cens_", k),
-					 cens <- as.numeric(
-					 	get(paste0("U_cens_", k), envir = .FunEnv) <
-					 		predict(
-					 			get(paste0("mod_cens_", k), envir = .FunEnv),
-					 			newdata = as.data.frame(sapply(C.pred[[k]], get, envir = .FunEnv, simplify = F)))),
+		assign(paste0("cens_", k), 0,
+					#  as.numeric(
+					#  	get(paste0("U_cens_", k), envir = .FunEnv) <
+					#  		predict(
+					#  			get(paste0("mod_cens_", k), envir = .FunEnv),
+					#  			newdata = as.data.frame(sapply(C.pred[[k]], get, envir = .FunEnv, simplify = F)),
+					# 	 			type = "response")),
 					 envir = .FunEnv
 		)
-		if (k > 1 & sum(sapply(1:k, function(k) {get(paste0("cens_", k), envir = .FunEnv)})) > 0 ) {
+		if (k > 1 & sum(unlist(sapply(1:k, function(t) {get(paste0("cens_", t), envir = .FunEnv)}))) > 0 ) {
 			assign(paste0("cens_", k), 1, envir = .FunEnv )
 		}
 		assign(paste0("totchol_", k),
@@ -217,7 +222,8 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 					 	get(paste0("U_totchol_", k), envir = .FunEnv) <
 					 		predict(
 					 			get(paste0("mod_totchol_", k), envir = .FunEnv),
-					 			newdata = as.data.frame(sapply(A.pred[[k]], get, envir = .FunEnv, simplify = F)))),
+					 			newdata = as.data.frame(sapply(A.pred[[k]], get, envir = .FunEnv, simplify = F)),
+						 			type = "response")),
 					 envir = .FunEnv
 		)
 		assign(paste0("stroke_", k),
@@ -225,7 +231,8 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 					 	get(paste0("U_stroke_", k), envir = .FunEnv) <
 					 		predict(
 					 			get(paste0("mod_stroke_", k + 1), envir = .FunEnv),
-					 			newdata = as.data.frame(sapply(Y.pred[[k]], get, envir = .FunEnv, simplify = F)))),
+					 			newdata = as.data.frame(sapply(Y.pred[[k]], get, envir = .FunEnv, simplify = F)),
+						 			type = "response")),
 					 envir = .FunEnv
 		)
 	}
