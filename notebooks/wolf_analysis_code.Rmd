@@ -1,0 +1,38 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+Katie's ltmle code
+
+```{r}
+
+# load libraries
+library(tidyverse)
+library(here)
+library(pander)
+library(tikzDevice)
+
+```
+
+
+
+```{r chen code}
+
+here()
+
+# run Chen's script to make the imputed dataset
+source(here::here("scripts", 
+                  "01-get-data.R"))
+
+# save file to disk
+save(frm.wide, 
+     here("data", 
+          "frm_wide.rdata"))
+
+
+
+```
+
