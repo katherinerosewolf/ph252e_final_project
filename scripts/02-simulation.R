@@ -205,18 +205,19 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 					 cigpday,
 					 envir = .FunEnv
 		)
-		assign(paste0("cens_", k), 0,
-					#  as.numeric(
-					#  	get(paste0("U_cens_", k), envir = .FunEnv) <
-					#  		predict(
-					#  			get(paste0("mod_cens_", k), envir = .FunEnv),
-					#  			newdata = as.data.frame(sapply(C.pred[[k]], get, envir = .FunEnv, simplify = F)),
-					# 	 			type = "response")),
+		cens <- as.numeric(
+					 	get(paste0("U_cens_", k), envir = .FunEnv) <
+					 		predict(
+					 			get(paste0("mod_cens_", k), envir = .FunEnv),
+					 			newdata = as.data.frame(sapply(C.pred[[k]], get, envir = .FunEnv, simplify = F)),
+						 			type = "response"))
+		if (k > 1) {
+			cens[get(paste0("cens_", k - 1), envir = .FunEnv) == 1] <- 1
+		}
+		assign(paste0("cens_", k),# 0,
+					 cens,
 					 envir = .FunEnv
 		)
-		if (k > 1 & sum(unlist(sapply(1:k, function(t) {get(paste0("cens_", t), envir = .FunEnv)}))) > 0 ) {
-			assign(paste0("cens_", k), 1, envir = .FunEnv )
-		}
 		assign(paste0("totchol_", k),
 					 as.numeric(
 					 	get(paste0("U_totchol_", k), envir = .FunEnv) <
