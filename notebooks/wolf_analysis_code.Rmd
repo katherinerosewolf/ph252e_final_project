@@ -201,6 +201,8 @@ summary(results_gcomp, "gcomp")
 
 ```{r simulated data ltmle package}
 
+set.seed(252)
+
 library(tidyverse)
 library(here)
 library(pander)
@@ -227,7 +229,6 @@ frm_time_order_sim <- frm.sim %>%
          "bmi_1", 
          "chd_1", 
          "hyperten_1", 
-         "cens_1",
          "totchol_1", 
          "stroke_1", 
          "age_2", 
@@ -235,7 +236,6 @@ frm_time_order_sim <- frm.sim %>%
          "bmi_2", 
          "chd_2", 
          "hyperten_2", 
-         "cens_2",
          "totchol_2", 
          "stroke_2", 
          "age_3", 
@@ -243,7 +243,6 @@ frm_time_order_sim <- frm.sim %>%
          "bmi_3", 
          "chd_3", 
          "hyperten_3", 
-         "cens_3",
          "totchol_3", 
          "stroke_3")
 
@@ -310,9 +309,9 @@ results_iptw_tmle_sim <- ltmleMSM(data = frm_for_ltmle_sim,
                                          "bmi_3", 
                                          "chd_3", 
                                          "hyperten_3"), 
-                              Cnodes = c("cens_1", 
-                                         "cens_2", 
-                                         "cens_3"),
+                              # Cnodes = c("cens_1", 
+                                #          "cens_2", 
+                                  #        "cens_3"),
                               Ynodes = Ynodes, 
                               survivalOutcome = TRUE, 
                               regimes = regimes,
@@ -342,9 +341,9 @@ results_gcomp_sim <- ltmleMSM(data = frm_for_ltmle_sim,
                                      "bmi_3", 
                                      "chd_3", 
                                      "hyperten_3"), 
-                          Cnodes = c("cens_1", 
-                                     "cens_2", 
-                                     "cens_3"),
+                          # Cnodes = c("cens_1", 
+                            #          "cens_2", 
+                              #        "cens_3"),
                           Ynodes = Ynodes, 
                           survivalOutcome = TRUE, 
                           regimes = regimes,
@@ -358,8 +357,6 @@ results_gcomp_sim <- ltmleMSM(data = frm_for_ltmle_sim,
 summary(results_iptw_tmle_sim, "tmle")
 summary(results_iptw_tmle_sim, "iptw")
 summary(results_gcomp_sim, "gcomp")
-
-
 
 ```
 

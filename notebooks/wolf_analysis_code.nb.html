@@ -1856,60 +1856,650 @@ sum(is.na(frm.wide))</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShyZXN1bHRzX2lwdHdfdG1sZSwgXCJ0bWxlXCIpXG5cbmBgYCJ9 -->
-<pre class="r"><code>summary(results_iptw_tmle, &quot;tmle&quot;)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5zZXQuc2VlZCgyNTIpXG5cbiMgbG9hZCBpbXB1dGVkIGRhdGFzZXRcbmxvYWQoZmlsZSA9IGhlcmUoXCJkYXRhXCIsIFxuICAgICAgICAgICAgICAgICBcImZybV93aWRlLnJkYXRhXCIpKVxuXG4jIHJlb3JkZXIgZGF0YVxuZnJtX3RpbWVfb3JkZXIgPC0gZnJtLndpZGUgJT4lIFxuICBzZWxlY3QoXCJzZXhcIiwgXG4gICAgICAgICBcImVkdWNcIiwgXG4gICAgICAgICBcImFnZV8xXCIsIFxuICAgICAgICAgXCJjaWdwZGF5XzFcIiwgXG4gICAgICAgICBcImJtaV8xXCIsIFxuICAgICAgICAgXCJjaGRfMVwiLCBcbiAgICAgICAgIFwiaHlwZXJ0ZW5fMVwiLCBcbiAgICAgICAgIFwiY2Vuc18xXCIsXG4gICAgICAgICBcInRvdGNob2xfMVwiLCBcbiAgICAgICAgIFwic3Ryb2tlXzFcIiwgXG4gICAgICAgICBcImFnZV8yXCIsIFxuICAgICAgICAgXCJjaWdwZGF5XzJcIiwgXG4gICAgICAgICBcImJtaV8yXCIsIFxuICAgICAgICAgXCJjaGRfMlwiLCBcbiAgICAgICAgIFwiaHlwZXJ0ZW5fMlwiLCBcbiAgICAgICAgIFwiY2Vuc18yXCIsXG4gICAgICAgICBcInRvdGNob2xfMlwiLCBcbiAgICAgICAgIFwic3Ryb2tlXzJcIiwgXG4gICAgICAgICBcImFnZV8zXCIsIFxuICAgICAgICAgXCJjaWdwZGF5XzNcIiwgXG4gICAgICAgICBcImJtaV8zXCIsIFxuICAgICAgICAgXCJjaGRfM1wiLCBcbiAgICAgICAgIFwiaHlwZXJ0ZW5fM1wiLCBcbiAgICAgICAgIFwiY2Vuc18zXCIsXG4gICAgICAgICBcInRvdGNob2xfM1wiLCBcbiAgICAgICAgIFwic3Ryb2tlXzNcIilcblxuIyByZWNvZGUgc3Ryb2tlIHRvIG1pbWljIHN1cnZpdmFsIChtYWtlIGl0IDEgcGVybWFuZW50bHkpXG5mcm1fZm9yX2x0bWxlIDwtIGZybV90aW1lX29yZGVyICU+JSBcbiAgbXV0YXRlKHN0cm9rZV8yID0gaWZlbHNlKHN0cm9rZV8xID09IDEsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgMSwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICBzdHJva2VfMiksIFxuICAgICAgICAgc3Ryb2tlXzMgPSBpZmVsc2Uoc3Ryb2tlXzIgPT0gMSwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAxLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cm9rZV8zKSlcblxuIyBzZXQgbiBlcXVhbCB0byBudW1iZXIgb2Ygcm93c1xubiA9IG5yb3coZnJtLndpZGUpXG5cbiMgaW5pdGlhbGl6ZSByZWdpbWVzIFxuIyBkaW0gbiBcbiMgbnVtIEFub2RlcyA9IDMgKD8pXG4jIG51bSBDRiByZWdpbWVzID0gOCAoPyAyIHggMiB4IDIpXG5yZWdpbWVzIDwtIGxpc3QoZnVuY3Rpb24ocm93KSBjKDEsMSwxKSwgXG4gICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDEsMSwwKSwgXG4gICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDEsMCwxKSwgXG4gICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDEsMCwwKSwgXG4gICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDAsMSwxKSwgXG4gICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDAsMSwwKSwgXG4gICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDAsMCwxKSwgXG4gICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDAsMCwwKSlcblxuIyBtYWtlIHN1bW1hcnkgbWVhc3VyZXMgKG51bWJlciBvZiByZWdpbWVzLCBudW1iZXIgb2YgQW5vZGVzLCB0aW1lKVxuc3VtbWFyeS5tZWFzdXJlcyA8LSBhcnJheShkaW0gPSBjKDgsIDEsIDMpKVxuXG5kaW1uYW1lcyhzdW1tYXJ5Lm1lYXN1cmVzKVtbMl1dIDwtIGMoXCJzdW1fY2hvbFwiKVxuXG4jIHRvdGFsIHRpbWVzIGJhZCBjaG9sZXN0ZXJvbFxuc3VtbWFyeS5tZWFzdXJlc1ssICwgMV0gPC0gYygxLDEsMSwxLDAsMCwwLDApXG5zdW1tYXJ5Lm1lYXN1cmVzWywgLCAyXSA8LSBjKDIsMiwxLDEsMSwxLDAsMClcbnN1bW1hcnkubWVhc3VyZXNbLCAsIDNdIDwtIGMoMywyLDIsMSwyLDEsMSwwKVxuXG5Zbm9kZXMgPSBjKFwic3Ryb2tlXzFcIiwgXG4gICAgICAgICAgIFwic3Ryb2tlXzJcIiwgXG4gICAgICAgICAgIFwic3Ryb2tlXzNcIilcblxuIyBnZXQgaXB0dyBhbmQgdG1sZVxucmVzdWx0c19pcHR3X3RtbGUgPC0gbHRtbGVNU00oZGF0YSA9IGZybV9mb3JfbHRtbGUsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQW5vZGVzID0gYyhcInRvdGNob2xfMVwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJ0b3RjaG9sXzJcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwidG90Y2hvbF8zXCIpLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIExub2RlcyA9IGMoXCJzZXhcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiZWR1Y1wiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJhZ2VfMVwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJjaWdwZGF5XzFcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiYm1pXzFcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiY2hkXzFcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiaHlwZXJ0ZW5fMVwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJhZ2VfMlwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJjaWdwZGF5XzJcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiYm1pXzJcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiY2hkXzJcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiaHlwZXJ0ZW5fMlwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJhZ2VfM1wiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJjaWdwZGF5XzNcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiYm1pXzNcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiY2hkXzNcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiaHlwZXJ0ZW5fM1wiKSwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDbm9kZXMgPSBjKFwiY2Vuc18xXCIsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImNlbnNfMlwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJjZW5zXzNcIiksXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICBZbm9kZXMgPSBZbm9kZXMsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc3Vydml2YWxPdXRjb21lID0gVFJVRSwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZWdpbWVzID0gcmVnaW1lcyxcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN1bW1hcnkubWVhc3VyZXMgPSBzdW1tYXJ5Lm1lYXN1cmVzLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZpbmFsLllub2RlcyA9IFlub2RlcywgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICB3b3JraW5nLm1zbSA9IFwiWSB+IHN1bV9jaG9sXCIpXG5cbmBgYCJ9 -->
+<pre class="r"><code>
+set.seed(252)
+
+# load imputed dataset
+load(file = here(&quot;data&quot;, 
+                 &quot;frm_wide.rdata&quot;))
+
+# reorder data
+frm_time_order &lt;- frm.wide %&gt;% 
+  select(&quot;sex&quot;, 
+         &quot;educ&quot;, 
+         &quot;age_1&quot;, 
+         &quot;cigpday_1&quot;, 
+         &quot;bmi_1&quot;, 
+         &quot;chd_1&quot;, 
+         &quot;hyperten_1&quot;, 
+         &quot;cens_1&quot;,
+         &quot;totchol_1&quot;, 
+         &quot;stroke_1&quot;, 
+         &quot;age_2&quot;, 
+         &quot;cigpday_2&quot;, 
+         &quot;bmi_2&quot;, 
+         &quot;chd_2&quot;, 
+         &quot;hyperten_2&quot;, 
+         &quot;cens_2&quot;,
+         &quot;totchol_2&quot;, 
+         &quot;stroke_2&quot;, 
+         &quot;age_3&quot;, 
+         &quot;cigpday_3&quot;, 
+         &quot;bmi_3&quot;, 
+         &quot;chd_3&quot;, 
+         &quot;hyperten_3&quot;, 
+         &quot;cens_3&quot;,
+         &quot;totchol_3&quot;, 
+         &quot;stroke_3&quot;)
+
+# recode stroke to mimic survival (make it 1 permanently)
+frm_for_ltmle &lt;- frm_time_order %&gt;% 
+  mutate(stroke_2 = ifelse(stroke_1 == 1, 
+                           1, 
+                           stroke_2), 
+         stroke_3 = ifelse(stroke_2 == 1, 
+                           1, 
+                           stroke_3))
+
+# set n equal to number of rows
+n = nrow(frm.wide)
+
+# initialize regimes 
+# dim n 
+# num Anodes = 3 (?)
+# num CF regimes = 8 (? 2 x 2 x 2)
+regimes &lt;- list(function(row) c(1,1,1), 
+                function(row) c(1,1,0), 
+                function(row) c(1,0,1), 
+                function(row) c(1,0,0), 
+                function(row) c(0,1,1), 
+                function(row) c(0,1,0), 
+                function(row) c(0,0,1), 
+                function(row) c(0,0,0))
+
+# make summary measures (number of regimes, number of Anodes, time)
+summary.measures &lt;- array(dim = c(8, 1, 3))
+
+dimnames(summary.measures)[[2]] &lt;- c(&quot;sum_chol&quot;)
+
+# total times bad cholesterol
+summary.measures[, , 1] &lt;- c(1,1,1,1,0,0,0,0)
+summary.measures[, , 2] &lt;- c(2,2,1,1,1,1,0,0)
+summary.measures[, , 3] &lt;- c(3,2,2,1,2,1,1,0)
+
+Ynodes = c(&quot;stroke_1&quot;, 
+           &quot;stroke_2&quot;, 
+           &quot;stroke_3&quot;)
+
+# get iptw and tmle
+results_iptw_tmle &lt;- ltmleMSM(data = frm_for_ltmle, 
+                              Anodes = c(&quot;totchol_1&quot;, 
+                                         &quot;totchol_2&quot;, 
+                                         &quot;totchol_3&quot;), 
+                              Lnodes = c(&quot;sex&quot;, 
+                                         &quot;educ&quot;, 
+                                         &quot;age_1&quot;, 
+                                         &quot;cigpday_1&quot;, 
+                                         &quot;bmi_1&quot;, 
+                                         &quot;chd_1&quot;, 
+                                         &quot;hyperten_1&quot;, 
+                                         &quot;age_2&quot;, 
+                                         &quot;cigpday_2&quot;, 
+                                         &quot;bmi_2&quot;, 
+                                         &quot;chd_2&quot;, 
+                                         &quot;hyperten_2&quot;, 
+                                         &quot;age_3&quot;, 
+                                         &quot;cigpday_3&quot;, 
+                                         &quot;bmi_3&quot;, 
+                                         &quot;chd_3&quot;, 
+                                         &quot;hyperten_3&quot;), 
+                              Cnodes = c(&quot;cens_1&quot;, 
+                                         &quot;cens_2&quot;, 
+                                         &quot;cens_3&quot;),
+                              Ynodes = Ynodes, 
+                              survivalOutcome = TRUE, 
+                              regimes = regimes,
+                              summary.measures = summary.measures, 
+                              final.Ynodes = Ynodes, 
+                              working.msm = &quot;Y ~ sum_chol&quot;)
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXN0aW1hdG9yOiAgdG1sZSBcbiAgICAgICAgICAgIEVzdGltYXRlIFN0ZC4gRXJyb3IgQ0kgMi41JSBDSSA5Ny41JSAgcC12YWx1ZSAgICBcbihJbnRlcmNlcHQpICAxLjkxMDQ4ICAgIDAuMjA2NjAgMS41MDU1NCAgICAyLjMxNSAgPCAyZS0xNiAqKipcbnN1bV9jaG9sICAgICAwLjYzMDA0ICAgIDAuMDk3MzUgMC40MzkyNCAgICAwLjgyMSA5LjY4ZS0xMSAqKipcbi0tLVxuU2lnbmlmLiBjb2RlczogIDAg4oCYKioq4oCZIDAuMDAxIOKAmCoq4oCZIDAuMDEg4oCYKuKAmSAwLjA1IOKAmC7igJkgMC4xIOKAmCDigJkgMVxuIn0= -->
-<pre><code>Estimator:  tmle 
-            Estimate Std. Error CI 2.5% CI 97.5%  p-value    
-(Intercept)  1.91048    0.20660 1.50554    2.315  &lt; 2e-16 ***
-sum_chol     0.63004    0.09735 0.43924    0.821 9.68e-11 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShyZXN1bHRzX2lwdHdfdG1sZSwgXCJpcHR3XCIpXG5gYGAifQ== -->
-<pre class="r"><code>summary(results_iptw_tmle, &quot;iptw&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXN0aW1hdG9yOiAgaXB0dyBcbiAgICAgICAgICAgIEVzdGltYXRlIFN0ZC4gRXJyb3IgQ0kgMi41JSBDSSA5Ny41JSAgcC12YWx1ZSAgICBcbihJbnRlcmNlcHQpICAxLjk3NDQyICAgIDAuMjA2NjAgMS41Njk0OCAgICAyLjM3OSAgPCAyZS0xNiAqKipcbnN1bV9jaG9sICAgICAwLjU1NzI0ICAgIDAuMDk3MzUgMC4zNjY0MyAgICAwLjc0OCAxLjA0ZS0wOCAqKipcbi0tLVxuU2lnbmlmLiBjb2RlczogIDAg4oCYKioq4oCZIDAuMDAxIOKAmCoq4oCZIDAuMDEg4oCYKuKAmSAwLjA1IOKAmC7igJkgMC4xIOKAmCDigJkgMVxuIn0= -->
-<pre><code>Estimator:  iptw 
-            Estimate Std. Error CI 2.5% CI 97.5%  p-value    
-(Intercept)  1.97442    0.20660 1.56948    2.379  &lt; 2e-16 ***
-sum_chol     0.55724    0.09735 0.36643    0.748 1.04e-08 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShyZXN1bHRzX2djb21wLCBcImdjb21wXCIpXG5gYGAifQ== -->
-<pre class="r"><code>summary(results_gcomp, &quot;gcomp&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXN0aW1hdG9yOiAgZ2NvbXAgXG5XYXJuaW5nOiBpbmZlcmVuY2UgZm9yIGdjb21wIGlzIG5vdCBhY2N1cmF0ZSEgSXQgaXMgYmFzZWQgb24gVE1MRSBpbmZsdWVuY2UgY3VydmVzLlxuICAgICAgICAgICAgRXN0aW1hdGUgU3RkLiBFcnJvciBDSSAyLjUlIENJIDk3LjUlIHAtdmFsdWUgICAgXG4oSW50ZXJjZXB0KSAgMS45MTk4OSAgICAwLjExNTg4IDEuNjkyNzcgICAgMi4xNDcgIDwyZS0xNiAqKipcbnN1bV9jaG9sICAgICAwLjUzNjY2ICAgIDAuMDU1MDcgMC40Mjg3MSAgICAwLjY0NSAgPDJlLTE2ICoqKlxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDigJgqKirigJkgMC4wMDEg4oCYKirigJkgMC4wMSDigJgq4oCZIDAuMDUg4oCYLuKAmSAwLjEg4oCYIOKAmSAxXG4ifQ== -->
-<pre><code>Estimator:  gcomp 
-Warning: inference for gcomp is not accurate! It is based on TMLE influence curves.
-            Estimate Std. Error CI 2.5% CI 97.5% p-value    
-(Intercept)  1.91989    0.11588 1.69277    2.147  &lt;2e-16 ***
-sum_chol     0.53666    0.05507 0.42871    0.645  &lt;2e-16 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuUWZvcm0gbm90IHNwZWNpZmllZCwgdXNpbmcgZGVmYXVsdHM6XG5mb3JtdWxhIGZvciBzdHJva2VfMTpcblEua3BsdXMxIH4gc2V4ICsgZWR1YyArIGFnZV8xICsgY2lncGRheV8xICsgYm1pXzEgKyBjaGRfMSArIGh5cGVydGVuXzEgKyAgICAgdG90Y2hvbF8xXG5mb3JtdWxhIGZvciBzdHJva2VfMjpcblEua3BsdXMxIH4gc2V4ICsgZWR1YyArIGFnZV8xICsgY2lncGRheV8xICsgYm1pXzEgKyBjaGRfMSArIGh5cGVydGVuXzEgKyAgICAgdG90Y2hvbF8xICsgYWdlXzIgKyBjaWdwZGF5XzIgKyBibWlfMiArIGNoZF8yICsgaHlwZXJ0ZW5fMiArICAgICB0b3RjaG9sXzJcbmZvcm11bGEgZm9yIHN0cm9rZV8zOlxuUS5rcGx1czEgfiBzZXggKyBlZHVjICsgYWdlXzEgKyBjaWdwZGF5XzEgKyBibWlfMSArIGNoZF8xICsgaHlwZXJ0ZW5fMSArICAgICB0b3RjaG9sXzEgKyBhZ2VfMiArIGNpZ3BkYXlfMiArIGJtaV8yICsgY2hkXzIgKyBoeXBlcnRlbl8yICsgICAgIHRvdGNob2xfMiArIGFnZV8zICsgY2lncGRheV8zICsgYm1pXzMgKyBjaGRfMyArIGh5cGVydGVuXzMgKyAgICAgdG90Y2hvbF8zXG5cbmdmb3JtIG5vdCBzcGVjaWZpZWQsIHVzaW5nIGRlZmF1bHRzOlxuZm9ybXVsYSBmb3IgY2Vuc18xOlxuY2Vuc18xIH4gc2V4ICsgZWR1YyArIGFnZV8xICsgY2lncGRheV8xICsgYm1pXzEgKyBjaGRfMSArIGh5cGVydGVuXzFcbmZvcm11bGEgZm9yIHRvdGNob2xfMTpcbnRvdGNob2xfMSB+IHNleCArIGVkdWMgKyBhZ2VfMSArIGNpZ3BkYXlfMSArIGJtaV8xICsgY2hkXzEgKyAgICAgaHlwZXJ0ZW5fMVxuZm9ybXVsYSBmb3IgY2Vuc18yOlxuY2Vuc18yIH4gc2V4ICsgZWR1YyArIGFnZV8xICsgY2lncGRheV8xICsgYm1pXzEgKyBjaGRfMSArIGh5cGVydGVuXzEgKyAgICAgdG90Y2hvbF8xICsgYWdlXzIgKyBjaWdwZGF5XzIgKyBibWlfMiArIGNoZF8yICsgaHlwZXJ0ZW5fMlxuZm9ybXVsYSBmb3IgdG90Y2hvbF8yOlxudG90Y2hvbF8yIH4gc2V4ICsgZWR1YyArIGFnZV8xICsgY2lncGRheV8xICsgYm1pXzEgKyBjaGRfMSArICAgICBoeXBlcnRlbl8xICsgdG90Y2hvbF8xICsgYWdlXzIgKyBjaWdwZGF5XzIgKyBibWlfMiArIGNoZF8yICsgICAgIGh5cGVydGVuXzJcbmZvcm11bGEgZm9yIGNlbnNfMzpcbmNlbnNfMyB+IHNleCArIGVkdWMgKyBhZ2VfMSArIGNpZ3BkYXlfMSArIGJtaV8xICsgY2hkXzEgKyBoeXBlcnRlbl8xICsgICAgIHRvdGNob2xfMSArIGFnZV8yICsgY2lncGRheV8yICsgYm1pXzIgKyBjaGRfMiArIGh5cGVydGVuXzIgKyAgICAgdG90Y2hvbF8yICsgYWdlXzMgKyBjaWdwZGF5XzMgKyBibWlfMyArIGNoZF8zICsgaHlwZXJ0ZW5fM1xuZm9ybXVsYSBmb3IgdG90Y2hvbF8zOlxudG90Y2hvbF8zIH4gc2V4ICsgZWR1YyArIGFnZV8xICsgY2lncGRheV8xICsgYm1pXzEgKyBjaGRfMSArICAgICBoeXBlcnRlbl8xICsgdG90Y2hvbF8xICsgYWdlXzIgKyBjaWdwZGF5XzIgKyBibWlfMiArIGNoZF8yICsgICAgIGh5cGVydGVuXzIgKyB0b3RjaG9sXzIgKyBhZ2VfMyArIGNpZ3BkYXlfMyArIGJtaV8zICsgY2hkXzMgKyAgICAgaHlwZXJ0ZW5fM1xuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5zcGVlZGdsbSBmYWlsZWQsIHVzaW5nIGdsbSBpbnN0ZWFkLiBJZiB5b3Ugc2VlIGEgbG90IG9mIHRoaXMgbWVzc2FnZSBhbmQgeW91IGhhdmUgbGFyZ2UgYWJzb2x1dGUgdmFsdWVzIGluIGRhdGFbLCBMbm9kZXNdLCB5b3UgbWF5IGdldCBhIHNwZWVkIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50IGJ5IHJlc2NhbGluZyB0aGVzZSB2YWx1ZXMuXG5Fc3RpbWF0ZSBvZiB0aW1lIHRvIGNvbXBsZXRpb246IDIgdG8gMyBtaW51dGVzXG4ifQ== -->
+<pre><code>Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Qform not specified, using defaults:
+formula for stroke_1:
+Q.kplus1 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 + hyperten_1 +     totchol_1
+formula for stroke_2:
+Q.kplus1 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 + hyperten_1 +     totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 + hyperten_2 +     totchol_2
+formula for stroke_3:
+Q.kplus1 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 + hyperten_1 +     totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 + hyperten_2 +     totchol_2 + age_3 + cigpday_3 + bmi_3 + chd_3 + hyperten_3 +     totchol_3
+
+gform not specified, using defaults:
+formula for cens_1:
+cens_1 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 + hyperten_1
+formula for totchol_1:
+totchol_1 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 +     hyperten_1
+formula for cens_2:
+cens_2 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 + hyperten_1 +     totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 + hyperten_2
+formula for totchol_2:
+totchol_2 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 +     hyperten_1 + totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 +     hyperten_2
+formula for cens_3:
+cens_3 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 + hyperten_1 +     totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 + hyperten_2 +     totchol_2 + age_3 + cigpday_3 + bmi_3 + chd_3 + hyperten_3
+formula for totchol_3:
+totchol_3 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 +     hyperten_1 + totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 +     hyperten_2 + totchol_2 + age_3 + cigpday_3 + bmi_3 + chd_3 +     hyperten_3
+
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+Estimate of time to completion: 2 to 3 minutes</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGRpc3BsYXkgcmVzdWx0c1xuc3VtbWFyeShyZXN1bHRzX2lwdHdfdG1sZV9zaW0sIFwidG1sZVwiKVxuXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5zZXQuc2VlZCgyNTIpXG5cbmxpYnJhcnkodGlkeXZlcnNlKVxubGlicmFyeShoZXJlKVxubGlicmFyeShwYW5kZXIpXG5saWJyYXJ5KHRpa3pEZXZpY2UpXG5saWJyYXJ5KGx0bWxlKVxuXG4jIHJ1biBDaGVuJ3Mgc2NyaXB0IHRvIG1ha2UgdGhlIHNpbXVsYXRlZCBkYXRhc2V0XG5zb3VyY2UoaGVyZTo6aGVyZShcInNjcmlwdHNcIiwgXG4gICAgICAgICAgICAgICAgICBcIjAyLXNpbXVsYXRpb24uUlwiKSlcbmBgYCJ9 -->
 <pre class="r"><code>
-# display results
-summary(results_iptw_tmle_sim, &quot;tmle&quot;)
-</code></pre>
+set.seed(252)
+
+library(tidyverse)
+library(here)
+library(pander)
+library(tikzDevice)
+library(ltmle)
+
+# run Chen&#39;s script to make the simulated dataset
+source(here::here(&quot;scripts&quot;, 
+                  &quot;02-simulation.R&quot;))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gc3VtbWFyeShyZXN1bHRzX2lwdHdfdG1sZV9zaW0sIFwidG1sZVwiKSA6IFxuICBvYmplY3QgJ3Jlc3VsdHNfaXB0d190bWxlX3NpbScgbm90IGZvdW5kXG4ifQ== -->
-<pre><code>Error in summary(results_iptw_tmle_sim, &quot;tmle&quot;) : 
-  object &#39;results_iptw_tmle_sim&#39; not found</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiQ2xhc3NlcyDigJhkYXRhLnRhYmxl4oCZIGFuZCAnZGF0YS5mcmFtZSc6XHQxMzMwMiBvYnMuIG9mICAzOSB2YXJpYWJsZXM6XG4gJCByYW5kaWQgIDogaW50ICAyNDQ4IDI0NDggMjQ0OCA2MjM4IDYyMzggNjIzOCA5NDI4IDk0MjggOTQyOCAxMDU1MiAuLi5cbiAkIHBlcmlvZCAgOiBpbnQgIDEgMiAzIDEgMiAzIDEgMiAzIDEgLi4uXG4gJCBzZXggICAgIDogaW50ICAxIE5BIDEgMiAyIDIgMSAxIE5BIDIgLi4uXG4gJCB0b3RjaG9sIDogaW50ICAxOTUgTkEgMjA5IDI1MCAyNjAgMjM3IDI0NSAyODMgTkEgMjI1IC4uLlxuICQgYWdlICAgICA6IGludCAgMzkgTkEgNTIgNDYgNTIgNTggNDggNTQgTkEgNjEgLi4uXG4gJCBzeXNicCAgIDogbnVtICAxMDYgTkEgMTIxIDEyMSAxMDUgLi4uXG4gJCBkaWFicCAgIDogbnVtICA3MCBOQSA2NiA4MSA2OS41IDY2IDgwIDg5IE5BIDk1IC4uLlxuICQgY3Vyc21va2U6IGludCAgMCBOQSAwIDAgMCAwIDEgMSBOQSAxIC4uLlxuICQgY2lncGRheSA6IGludCAgMCBOQSAwIDAgMCAwIDIwIDMwIE5BIDMwIC4uLlxuICQgYm1pICAgICA6IG51bSAgMjcgTkEgTkEgMjguNyAyOS40IC4uLlxuICQgZGlhYmV0ZXM6IGludCAgMCBOQSAwIDAgMCAwIDAgMCBOQSAwIC4uLlxuICQgYnBtZWRzICA6IGludCAgMCBOQSAwIDAgMCAwIDAgMCBOQSAwIC4uLlxuICQgaGVhcnRydGU6IGludCAgODAgTkEgNjkgOTUgODAgODAgNzUgNzUgTkEgNjUgLi4uXG4gJCBnbHVjb3NlIDogaW50ICA3NyBOQSA5MiA3NiA4NiA3MSA3MCA4NyBOQSAxMDMgLi4uXG4gJCBlZHVjICAgIDogaW50ICA0IE5BIDQgMiAyIDIgMSAxIE5BIDMgLi4uXG4gJCBwcmV2Y2hkIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBwcmV2YXAgIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBwcmV2bWkgIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBwcmV2c3RyazogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBwcmV2aHlwIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDEgLi4uXG4gJCB0aW1lICAgIDogaW50ICAwIE5BIDQ2MjggMCAyMTU2IDQzNDQgMCAyMTk5IE5BIDAgLi4uXG4gJCBoZGxjICAgIDogaW50ICBOQSBOQSAzMSBOQSBOQSA1NCBOQSBOQSBOQSBOQSAuLi5cbiAkIGxkbGMgICAgOiBpbnQgIE5BIE5BIDE3OCBOQSBOQSAxNDEgTkEgTkEgTkEgTkEgLi4uXG4gJCBkZWF0aCAgIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDEgLi4uXG4gJCBhbmdpbmEgIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBob3NwbWkgIDogaW50ICAxIE5BIDEgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBtaV9mY2hkIDogaW50ICAxIE5BIDEgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBhbnljaGQgIDogaW50ICAxIE5BIDEgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBzdHJva2UgIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDEgLi4uXG4gJCBjdmQgICAgIDogaW50ICAxIE5BIDEgMCAwIDAgMCAwIE5BIDEgLi4uXG4gJCBoeXBlcnRlbjogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDEgLi4uXG4gJCB0aW1lYXAgIDogaW50ICA4NzY2IE5BIDg3NjYgODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDI5NTYgLi4uXG4gJCB0aW1lbWkgIDogaW50ICA2NDM4IE5BIDY0MzggODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDI5NTYgLi4uXG4gJCB0aW1lbWlmYzogaW50ICA2NDM4IE5BIDY0MzggODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDI5NTYgLi4uXG4gJCB0aW1lY2hkIDogaW50ICA2NDM4IE5BIDY0MzggODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDI5NTYgLi4uXG4gJCB0aW1lc3RyazogaW50ICA4NzY2IE5BIDg3NjYgODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDIwODkgLi4uXG4gJCB0aW1lY3ZkIDogaW50ICA2NDM4IE5BIDY0MzggODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDIwODkgLi4uXG4gJCB0aW1lZHRoIDogaW50ICA4NzY2IE5BIDg3NjYgODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDI5NTYgLi4uXG4gJCB0aW1laHlwIDogaW50ICA4NzY2IE5BIDg3NjYgODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDAgLi4uXG4gLSBhdHRyKCosIFwiLmludGVybmFsLnNlbGZyZWZcIik9PGV4dGVybmFscHRyPiBcbiAtIGF0dHIoKiwgXCJzb3J0ZWRcIik9IGNociBbMToyXSBcInJhbmRpZFwiIFwicGVyaW9kXCJcbiJ9 -->
+<pre><code>Classes ‘data.table’ and &#39;data.frame&#39;:  13302 obs. of  39 variables:
+ $ randid  : int  2448 2448 2448 6238 6238 6238 9428 9428 9428 10552 ...
+ $ period  : int  1 2 3 1 2 3 1 2 3 1 ...
+ $ sex     : int  1 NA 1 2 2 2 1 1 NA 2 ...
+ $ totchol : int  195 NA 209 250 260 237 245 283 NA 225 ...
+ $ age     : int  39 NA 52 46 52 58 48 54 NA 61 ...
+ $ sysbp   : num  106 NA 121 121 105 ...
+ $ diabp   : num  70 NA 66 81 69.5 66 80 89 NA 95 ...
+ $ cursmoke: int  0 NA 0 0 0 0 1 1 NA 1 ...
+ $ cigpday : int  0 NA 0 0 0 0 20 30 NA 30 ...
+ $ bmi     : num  27 NA NA 28.7 29.4 ...
+ $ diabetes: int  0 NA 0 0 0 0 0 0 NA 0 ...
+ $ bpmeds  : int  0 NA 0 0 0 0 0 0 NA 0 ...
+ $ heartrte: int  80 NA 69 95 80 80 75 75 NA 65 ...
+ $ glucose : int  77 NA 92 76 86 71 70 87 NA 103 ...
+ $ educ    : int  4 NA 4 2 2 2 1 1 NA 3 ...
+ $ prevchd : int  0 NA 0 0 0 0 0 0 NA 0 ...
+ $ prevap  : int  0 NA 0 0 0 0 0 0 NA 0 ...
+ $ prevmi  : int  0 NA 0 0 0 0 0 0 NA 0 ...
+ $ prevstrk: int  0 NA 0 0 0 0 0 0 NA 0 ...
+ $ prevhyp : int  0 NA 0 0 0 0 0 0 NA 1 ...
+ $ time    : int  0 NA 4628 0 2156 4344 0 2199 NA 0 ...
+ $ hdlc    : int  NA NA 31 NA NA 54 NA NA NA NA ...
+ $ ldlc    : int  NA NA 178 NA NA 141 NA NA NA NA ...
+ $ death   : int  0 NA 0 0 0 0 0 0 NA 1 ...
+ $ angina  : int  0 NA 0 0 0 0 0 0 NA 0 ...
+ $ hospmi  : int  1 NA 1 0 0 0 0 0 NA 0 ...
+ $ mi_fchd : int  1 NA 1 0 0 0 0 0 NA 0 ...
+ $ anychd  : int  1 NA 1 0 0 0 0 0 NA 0 ...
+ $ stroke  : int  0 NA 0 0 0 0 0 0 NA 1 ...
+ $ cvd     : int  1 NA 1 0 0 0 0 0 NA 1 ...
+ $ hyperten: int  0 NA 0 0 0 0 0 0 NA 1 ...
+ $ timeap  : int  8766 NA 8766 8766 8766 8766 8766 8766 NA 2956 ...
+ $ timemi  : int  6438 NA 6438 8766 8766 8766 8766 8766 NA 2956 ...
+ $ timemifc: int  6438 NA 6438 8766 8766 8766 8766 8766 NA 2956 ...
+ $ timechd : int  6438 NA 6438 8766 8766 8766 8766 8766 NA 2956 ...
+ $ timestrk: int  8766 NA 8766 8766 8766 8766 8766 8766 NA 2089 ...
+ $ timecvd : int  6438 NA 6438 8766 8766 8766 8766 8766 NA 2089 ...
+ $ timedth : int  8766 NA 8766 8766 8766 8766 8766 8766 NA 2956 ...
+ $ timehyp : int  8766 NA 8766 8766 8766 8766 8766 8766 NA 0 ...
+ - attr(*, &quot;.internal.selfref&quot;)=&lt;externalptr&gt; 
+ - attr(*, &quot;sorted&quot;)= chr [1:2] &quot;randid&quot; &quot;period&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiZ2xtLmZpdDogYWxnb3JpdGhtIGRpZCBub3QgY29udmVyZ2VnbG0uZml0OiBhbGdvcml0aG0gZGlkIG5vdCBjb252ZXJnZWdsbS5maXQ6IGZpdHRlZCBwcm9iYWJpbGl0aWVzIG51bWVyaWNhbGx5IDAgb3IgMSBvY2N1cnJlZHByZWRpY3Rpb24gZnJvbSBhIHJhbmstZGVmaWNpZW50IGZpdCBtYXkgYmUgbWlzbGVhZGluZ3ByZWRpY3Rpb24gZnJvbSBhIHJhbmstZGVmaWNpZW50IGZpdCBtYXkgYmUgbWlzbGVhZGluZ3ByZWRpY3Rpb24gZnJvbSBhIHJhbmstZGVmaWNpZW50IGZpdCBtYXkgYmUgbWlzbGVhZGluZ3ByZWRpY3Rpb24gZnJvbSBhIHJhbmstZGVmaWNpZW50IGZpdCBtYXkgYmUgbWlzbGVhZGluZ1xuIn0= -->
+<pre><code>glm.fit: algorithm did not convergeglm.fit: algorithm did not convergeglm.fit: fitted probabilities numerically 0 or 1 occurredprediction from a rank-deficient fit may be misleadingprediction from a rank-deficient fit may be misleadingprediction from a rank-deficient fit may be misleadingprediction from a rank-deficient fit may be misleading</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBzYXZlIGl0XG5zYXZlKGZybS5zaW0sIFxuICAgICBmaWxlID0gaGVyZShcImRhdGFcIiwgXG4gICAgICAgICAgICAgICAgIFwiZnJtLnNpbS5yZGF0YVwiKSlcblxuIyBzaW11bGF0ZWQgbHRtbGUgcmVzdWx0c1xuXG4jIHJlb3JkZXIgZGF0YVxuZnJtX3RpbWVfb3JkZXJfc2ltIDwtIGZybS5zaW0gJT4lIFxuICBzZWxlY3QoXCJzZXhcIiwgXG4gICAgICAgICBcImVkdWNcIiwgXG4gICAgICAgICBcImFnZV8xXCIsIFxuICAgICAgICAgXCJjaWdwZGF5XzFcIiwgXG4gICAgICAgICBcImJtaV8xXCIsIFxuICAgICAgICAgXCJjaGRfMVwiLCBcbiAgICAgICAgIFwiaHlwZXJ0ZW5fMVwiLCBcbiAgICAgICAgIFwidG90Y2hvbF8xXCIsIFxuICAgICAgICAgXCJzdHJva2VfMVwiLCBcbiAgICAgICAgIFwiYWdlXzJcIiwgXG4gICAgICAgICBcImNpZ3BkYXlfMlwiLCBcbiAgICAgICAgIFwiYm1pXzJcIiwgXG4gICAgICAgICBcImNoZF8yXCIsIFxuICAgICAgICAgXCJoeXBlcnRlbl8yXCIsIFxuICAgICAgICAgXCJ0b3RjaG9sXzJcIiwgXG4gICAgICAgICBcInN0cm9rZV8yXCIsIFxuICAgICAgICAgXCJhZ2VfM1wiLCBcbiAgICAgICAgIFwiY2lncGRheV8zXCIsIFxuICAgICAgICAgXCJibWlfM1wiLCBcbiAgICAgICAgIFwiY2hkXzNcIiwgXG4gICAgICAgICBcImh5cGVydGVuXzNcIiwgXG4gICAgICAgICBcInRvdGNob2xfM1wiLCBcbiAgICAgICAgIFwic3Ryb2tlXzNcIilcblxuIyByZWNvZGUgc3Ryb2tlIHRvIG1pbWljIHN1cnZpdmFsIChtYWtlIGl0IDEgcGVybWFuZW50bHkpXG5mcm1fZm9yX2x0bWxlX3NpbSA8LSBmcm1fdGltZV9vcmRlcl9zaW0gJT4lIFxuICBtdXRhdGUoc3Ryb2tlXzIgPSBpZmVsc2Uoc3Ryb2tlXzEgPT0gMSwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAxLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cm9rZV8yKSwgXG4gICAgICAgICBzdHJva2VfMyA9IGlmZWxzZShzdHJva2VfMiA9PSAxLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgIDEsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgc3Ryb2tlXzMpKVxuXG4jIHByZXZhbGVudCBzdHJva2U/XG5cbiMgc2V0IG4gZXF1YWwgdG8gbnVtYmVyIG9mIHJvd3Ncbm4gPSBucm93KGZybV9mb3JfbHRtbGVfc2ltKVxuXG4jIGluaXRpYWxpemUgcmVnaW1lcyBcbiMgZGltIG4gXG4jIG51bSBBbm9kZXMgPSAzICg/KVxuIyBudW0gQ0YgcmVnaW1lcyA9IDggKD8gMiB4IDIgeCAyKVxucmVnaW1lcyA8LSBsaXN0KGZ1bmN0aW9uKHJvdykgYygxLDEsMSksIFxuICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygxLDEsMCksIFxuICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygxLDAsMSksIFxuICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygxLDAsMCksIFxuICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygwLDEsMSksIFxuICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygwLDEsMCksIFxuICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygwLDAsMSksIFxuICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygwLDAsMCkpXG5cbiMgbWFrZSBzdW1tYXJ5IG1lYXN1cmVzIChudW1iZXIgb2YgcmVnaW1lcywgbnVtYmVyIG9mIEFub2RlcywgdGltZSlcbnN1bW1hcnkubWVhc3VyZXMgPC0gYXJyYXkoZGltID0gYyg4LCAxLCAzKSlcblxuZGltbmFtZXMoc3VtbWFyeS5tZWFzdXJlcylbWzJdXSA8LSBjKFwic3VtX2Nob2xcIilcblxuIyB0b3RhbCB0aW1lcyBiYWQgY2hvbGVzdGVyb2xcbnN1bW1hcnkubWVhc3VyZXNbLCAsIDFdIDwtIGMoMSwxLDEsMSwwLDAsMCwwKVxuc3VtbWFyeS5tZWFzdXJlc1ssICwgMl0gPC0gYygyLDIsMSwxLDEsMSwwLDApXG5zdW1tYXJ5Lm1lYXN1cmVzWywgLCAzXSA8LSBjKDMsMiwyLDEsMiwxLDEsMClcblxuWW5vZGVzID0gYyhcInN0cm9rZV8xXCIsIFxuICAgICAgICAgICBcInN0cm9rZV8yXCIsIFxuICAgICAgICAgICBcInN0cm9rZV8zXCIpXG5cbiMgZ2V0IGlwdHcgYW5kIHRtbGVcbnJlc3VsdHNfaXB0d190bWxlX3NpbSA8LSBsdG1sZU1TTShkYXRhID0gZnJtX2Zvcl9sdG1sZV9zaW0sIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQW5vZGVzID0gYyhcInRvdGNob2xfMVwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJ0b3RjaG9sXzJcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwidG90Y2hvbF8zXCIpLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIExub2RlcyA9IGMoXCJzZXhcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiZWR1Y1wiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJhZ2VfMVwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJjaWdwZGF5XzFcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiYm1pXzFcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiY2hkXzFcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiaHlwZXJ0ZW5fMVwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJhZ2VfMlwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJjaWdwZGF5XzJcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiYm1pXzJcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiY2hkXzJcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiaHlwZXJ0ZW5fMlwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJhZ2VfM1wiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJjaWdwZGF5XzNcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiYm1pXzNcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiY2hkXzNcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiaHlwZXJ0ZW5fM1wiKSwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIENub2RlcyA9IGMoXCJjZW5zXzFcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICMgICAgICAgICAgXCJjZW5zXzJcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyAgICAgICAgXCJjZW5zXzNcIiksXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICBZbm9kZXMgPSBZbm9kZXMsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc3Vydml2YWxPdXRjb21lID0gVFJVRSwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZWdpbWVzID0gcmVnaW1lcyxcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN1bW1hcnkubWVhc3VyZXMgPSBzdW1tYXJ5Lm1lYXN1cmVzLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZpbmFsLllub2RlcyA9IFlub2RlcywgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICB3b3JraW5nLm1zbSA9IFwiWSB+IHN1bV9jaG9sXCIpXG5gYGAifQ== -->
+<pre class="r"><code># save it
+save(frm.sim, 
+     file = here(&quot;data&quot;, 
+                 &quot;frm.sim.rdata&quot;))
+
+# simulated ltmle results
+
+# reorder data
+frm_time_order_sim &lt;- frm.sim %&gt;% 
+  select(&quot;sex&quot;, 
+         &quot;educ&quot;, 
+         &quot;age_1&quot;, 
+         &quot;cigpday_1&quot;, 
+         &quot;bmi_1&quot;, 
+         &quot;chd_1&quot;, 
+         &quot;hyperten_1&quot;, 
+         &quot;totchol_1&quot;, 
+         &quot;stroke_1&quot;, 
+         &quot;age_2&quot;, 
+         &quot;cigpday_2&quot;, 
+         &quot;bmi_2&quot;, 
+         &quot;chd_2&quot;, 
+         &quot;hyperten_2&quot;, 
+         &quot;totchol_2&quot;, 
+         &quot;stroke_2&quot;, 
+         &quot;age_3&quot;, 
+         &quot;cigpday_3&quot;, 
+         &quot;bmi_3&quot;, 
+         &quot;chd_3&quot;, 
+         &quot;hyperten_3&quot;, 
+         &quot;totchol_3&quot;, 
+         &quot;stroke_3&quot;)
+
+# recode stroke to mimic survival (make it 1 permanently)
+frm_for_ltmle_sim &lt;- frm_time_order_sim %&gt;% 
+  mutate(stroke_2 = ifelse(stroke_1 == 1, 
+                           1, 
+                           stroke_2), 
+         stroke_3 = ifelse(stroke_2 == 1, 
+                           1, 
+                           stroke_3))
+
+# prevalent stroke?
+
+# set n equal to number of rows
+n = nrow(frm_for_ltmle_sim)
+
+# initialize regimes 
+# dim n 
+# num Anodes = 3 (?)
+# num CF regimes = 8 (? 2 x 2 x 2)
+regimes &lt;- list(function(row) c(1,1,1), 
+                function(row) c(1,1,0), 
+                function(row) c(1,0,1), 
+                function(row) c(1,0,0), 
+                function(row) c(0,1,1), 
+                function(row) c(0,1,0), 
+                function(row) c(0,0,1), 
+                function(row) c(0,0,0))
+
+# make summary measures (number of regimes, number of Anodes, time)
+summary.measures &lt;- array(dim = c(8, 1, 3))
+
+dimnames(summary.measures)[[2]] &lt;- c(&quot;sum_chol&quot;)
+
+# total times bad cholesterol
+summary.measures[, , 1] &lt;- c(1,1,1,1,0,0,0,0)
+summary.measures[, , 2] &lt;- c(2,2,1,1,1,1,0,0)
+summary.measures[, , 3] &lt;- c(3,2,2,1,2,1,1,0)
+
+Ynodes = c(&quot;stroke_1&quot;, 
+           &quot;stroke_2&quot;, 
+           &quot;stroke_3&quot;)
+
+# get iptw and tmle
+results_iptw_tmle_sim &lt;- ltmleMSM(data = frm_for_ltmle_sim, 
+                              Anodes = c(&quot;totchol_1&quot;, 
+                                         &quot;totchol_2&quot;, 
+                                         &quot;totchol_3&quot;), 
+                              Lnodes = c(&quot;sex&quot;, 
+                                         &quot;educ&quot;, 
+                                         &quot;age_1&quot;, 
+                                         &quot;cigpday_1&quot;, 
+                                         &quot;bmi_1&quot;, 
+                                         &quot;chd_1&quot;, 
+                                         &quot;hyperten_1&quot;, 
+                                         &quot;age_2&quot;, 
+                                         &quot;cigpday_2&quot;, 
+                                         &quot;bmi_2&quot;, 
+                                         &quot;chd_2&quot;, 
+                                         &quot;hyperten_2&quot;, 
+                                         &quot;age_3&quot;, 
+                                         &quot;cigpday_3&quot;, 
+                                         &quot;bmi_3&quot;, 
+                                         &quot;chd_3&quot;, 
+                                         &quot;hyperten_3&quot;), 
+                              # Cnodes = c(&quot;cens_1&quot;, 
+                                #          &quot;cens_2&quot;, 
+                                  #        &quot;cens_3&quot;),
+                              Ynodes = Ynodes, 
+                              survivalOutcome = TRUE, 
+                              regimes = regimes,
+                              summary.measures = summary.measures, 
+                              final.Ynodes = Ynodes, 
+                              working.msm = &quot;Y ~ sum_chol&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cblFmb3JtIG5vdCBzcGVjaWZpZWQsIHVzaW5nIGRlZmF1bHRzOlxuZm9ybXVsYSBmb3Igc3Ryb2tlXzE6XG5RLmtwbHVzMSB+IHNleCArIGVkdWMgKyBhZ2VfMSArIGNpZ3BkYXlfMSArIGJtaV8xICsgY2hkXzEgKyBoeXBlcnRlbl8xICsgICAgIHRvdGNob2xfMVxuZm9ybXVsYSBmb3Igc3Ryb2tlXzI6XG5RLmtwbHVzMSB+IHNleCArIGVkdWMgKyBhZ2VfMSArIGNpZ3BkYXlfMSArIGJtaV8xICsgY2hkXzEgKyBoeXBlcnRlbl8xICsgICAgIHRvdGNob2xfMSArIGFnZV8yICsgY2lncGRheV8yICsgYm1pXzIgKyBjaGRfMiArIGh5cGVydGVuXzIgKyAgICAgdG90Y2hvbF8yXG5mb3JtdWxhIGZvciBzdHJva2VfMzpcblEua3BsdXMxIH4gc2V4ICsgZWR1YyArIGFnZV8xICsgY2lncGRheV8xICsgYm1pXzEgKyBjaGRfMSArIGh5cGVydGVuXzEgKyAgICAgdG90Y2hvbF8xICsgYWdlXzIgKyBjaWdwZGF5XzIgKyBibWlfMiArIGNoZF8yICsgaHlwZXJ0ZW5fMiArICAgICB0b3RjaG9sXzIgKyBhZ2VfMyArIGNpZ3BkYXlfMyArIGJtaV8zICsgY2hkXzMgKyBoeXBlcnRlbl8zICsgICAgIHRvdGNob2xfM1xuXG5nZm9ybSBub3Qgc3BlY2lmaWVkLCB1c2luZyBkZWZhdWx0czpcbmZvcm11bGEgZm9yIHRvdGNob2xfMTpcbnRvdGNob2xfMSB+IHNleCArIGVkdWMgKyBhZ2VfMSArIGNpZ3BkYXlfMSArIGJtaV8xICsgY2hkXzEgKyAgICAgaHlwZXJ0ZW5fMVxuZm9ybXVsYSBmb3IgdG90Y2hvbF8yOlxudG90Y2hvbF8yIH4gc2V4ICsgZWR1YyArIGFnZV8xICsgY2lncGRheV8xICsgYm1pXzEgKyBjaGRfMSArICAgICBoeXBlcnRlbl8xICsgdG90Y2hvbF8xICsgYWdlXzIgKyBjaWdwZGF5XzIgKyBibWlfMiArIGNoZF8yICsgICAgIGh5cGVydGVuXzJcbmZvcm11bGEgZm9yIHRvdGNob2xfMzpcbnRvdGNob2xfMyB+IHNleCArIGVkdWMgKyBhZ2VfMSArIGNpZ3BkYXlfMSArIGJtaV8xICsgY2hkXzEgKyAgICAgaHlwZXJ0ZW5fMSArIHRvdGNob2xfMSArIGFnZV8yICsgY2lncGRheV8yICsgYm1pXzIgKyBjaGRfMiArICAgICBoeXBlcnRlbl8yICsgdG90Y2hvbF8yICsgYWdlXzMgKyBjaWdwZGF5XzMgKyBibWlfMyArIGNoZF8zICsgICAgIGh5cGVydGVuXzNcblxuc3BlZWRnbG0gZmFpbGVkLCB1c2luZyBnbG0gaW5zdGVhZC4gSWYgeW91IHNlZSBhIGxvdCBvZiB0aGlzIG1lc3NhZ2UgYW5kIHlvdSBoYXZlIGxhcmdlIGFic29sdXRlIHZhbHVlcyBpbiBkYXRhWywgTG5vZGVzXSwgeW91IG1heSBnZXQgYSBzcGVlZCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudCBieSByZXNjYWxpbmcgdGhlc2UgdmFsdWVzLlxuc3BlZWRnbG0gZmFpbGVkLCB1c2luZyBnbG0gaW5zdGVhZC4gSWYgeW91IHNlZSBhIGxvdCBvZiB0aGlzIG1lc3NhZ2UgYW5kIHlvdSBoYXZlIGxhcmdlIGFic29sdXRlIHZhbHVlcyBpbiBkYXRhWywgTG5vZGVzXSwgeW91IG1heSBnZXQgYSBzcGVlZCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudCBieSByZXNjYWxpbmcgdGhlc2UgdmFsdWVzLlxuc3BlZWRnbG0gZmFpbGVkLCB1c2luZyBnbG0gaW5zdGVhZC4gSWYgeW91IHNlZSBhIGxvdCBvZiB0aGlzIG1lc3NhZ2UgYW5kIHlvdSBoYXZlIGxhcmdlIGFic29sdXRlIHZhbHVlcyBpbiBkYXRhWywgTG5vZGVzXSwgeW91IG1heSBnZXQgYSBzcGVlZCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudCBieSByZXNjYWxpbmcgdGhlc2UgdmFsdWVzLlxuc3BlZWRnbG0gZmFpbGVkLCB1c2luZyBnbG0gaW5zdGVhZC4gSWYgeW91IHNlZSBhIGxvdCBvZiB0aGlzIG1lc3NhZ2UgYW5kIHlvdSBoYXZlIGxhcmdlIGFic29sdXRlIHZhbHVlcyBpbiBkYXRhWywgTG5vZGVzXSwgeW91IG1heSBnZXQgYSBzcGVlZCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudCBieSByZXNjYWxpbmcgdGhlc2UgdmFsdWVzLlxuc3BlZWRnbG0gZmFpbGVkLCB1c2luZyBnbG0gaW5zdGVhZC4gSWYgeW91IHNlZSBhIGxvdCBvZiB0aGlzIG1lc3NhZ2UgYW5kIHlvdSBoYXZlIGxhcmdlIGFic29sdXRlIHZhbHVlcyBpbiBkYXRhWywgTG5vZGVzXSwgeW91IG1heSBnZXQgYSBzcGVlZCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudCBieSByZXNjYWxpbmcgdGhlc2UgdmFsdWVzLlxuc3BlZWRnbG0gZmFpbGVkLCB1c2luZyBnbG0gaW5zdGVhZC4gSWYgeW91IHNlZSBhIGxvdCBvZiB0aGlzIG1lc3NhZ2UgYW5kIHlvdSBoYXZlIGxhcmdlIGFic29sdXRlIHZhbHVlcyBpbiBkYXRhWywgTG5vZGVzXSwgeW91IG1heSBnZXQgYSBzcGVlZCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudCBieSByZXNjYWxpbmcgdGhlc2UgdmFsdWVzLlxuc3BlZWRnbG0gZmFpbGVkLCB1c2luZyBnbG0gaW5zdGVhZC4gSWYgeW91IHNlZSBhIGxvdCBvZiB0aGlzIG1lc3NhZ2UgYW5kIHlvdSBoYXZlIGxhcmdlIGFic29sdXRlIHZhbHVlcyBpbiBkYXRhWywgTG5vZGVzXSwgeW91IG1heSBnZXQgYSBzcGVlZCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudCBieSByZXNjYWxpbmcgdGhlc2UgdmFsdWVzLlxuc3BlZWRnbG0gZmFpbGVkLCB1c2luZyBnbG0gaW5zdGVhZC4gSWYgeW91IHNlZSBhIGxvdCBvZiB0aGlzIG1lc3NhZ2UgYW5kIHlvdSBoYXZlIGxhcmdlIGFic29sdXRlIHZhbHVlcyBpbiBkYXRhWywgTG5vZGVzXSwgeW91IG1heSBnZXQgYSBzcGVlZCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudCBieSByZXNjYWxpbmcgdGhlc2UgdmFsdWVzLlxuc3BlZWRnbG0gZmFpbGVkLCB1c2luZyBnbG0gaW5zdGVhZC4gSWYgeW91IHNlZSBhIGxvdCBvZiB0aGlzIG1lc3NhZ2UgYW5kIHlvdSBoYXZlIGxhcmdlIGFic29sdXRlIHZhbHVlcyBpbiBkYXRhWywgTG5vZGVzXSwgeW91IG1heSBnZXQgYSBzcGVlZCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudCBieSByZXNjYWxpbmcgdGhlc2UgdmFsdWVzLlxuc3BlZWRnbG0gZmFpbGVkLCB1c2luZyBnbG0gaW5zdGVhZC4gSWYgeW91IHNlZSBhIGxvdCBvZiB0aGlzIG1lc3NhZ2UgYW5kIHlvdSBoYXZlIGxhcmdlIGFic29sdXRlIHZhbHVlcyBpbiBkYXRhWywgTG5vZGVzXSwgeW91IG1heSBnZXQgYSBzcGVlZCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudCBieSByZXNjYWxpbmcgdGhlc2UgdmFsdWVzLlxuRXN0aW1hdGUgb2YgdGltZSB0byBjb21wbGV0aW9uOiAyIHRvIDMgbWludXRlc1xuc3BlZWRnbG0gZmFpbGVkLCB1c2luZyBnbG0gaW5zdGVhZC4gSWYgeW91IHNlZSBhIGxvdCBvZiB0aGlzIG1lc3NhZ2UgYW5kIHlvdSBoYXZlIGxhcmdlIGFic29sdXRlIHZhbHVlcyBpbiBkYXRhWywgTG5vZGVzXSwgeW91IG1heSBnZXQgYSBzcGVlZCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudCBieSByZXNjYWxpbmcgdGhlc2UgdmFsdWVzLlxuIn0= -->
+<pre><code>Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Qform not specified, using defaults:
+formula for stroke_1:
+Q.kplus1 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 + hyperten_1 +     totchol_1
+formula for stroke_2:
+Q.kplus1 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 + hyperten_1 +     totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 + hyperten_2 +     totchol_2
+formula for stroke_3:
+Q.kplus1 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 + hyperten_1 +     totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 + hyperten_2 +     totchol_2 + age_3 + cigpday_3 + bmi_3 + chd_3 + hyperten_3 +     totchol_3
+
+gform not specified, using defaults:
+formula for totchol_1:
+totchol_1 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 +     hyperten_1
+formula for totchol_2:
+totchol_2 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 +     hyperten_1 + totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 +     hyperten_2
+formula for totchol_3:
+totchol_3 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 +     hyperten_1 + totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 +     hyperten_2 + totchol_2 + age_3 + cigpday_3 + bmi_3 + chd_3 +     hyperten_3
+
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.
+Estimate of time to completion: 2 to 3 minutes
+speedglm failed, using glm instead. If you see a lot of this message and you have large absolute values in data[, Lnodes], you may get a speed performance improvement by rescaling these values.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBnZXQgdGhlIGdjb21wdXRhdGlvbiB2ZXJzaW9uXG5yZXN1bHRzX2djb21wX3NpbSA8LSBsdG1sZU1TTShkYXRhID0gZnJtX2Zvcl9sdG1sZV9zaW0sIFxuICAgICAgICAgICAgICAgICAgICAgICAgICBBbm9kZXMgPSBjKFwidG90Y2hvbF8xXCIsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwidG90Y2hvbF8yXCIsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwidG90Y2hvbF8zXCIpLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgTG5vZGVzID0gYyhcInNleFwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImVkdWNcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJhZ2VfMVwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImNpZ3BkYXlfMVwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImJtaV8xXCIsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiY2hkXzFcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJoeXBlcnRlbl8xXCIsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiYWdlXzJcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJjaWdwZGF5XzJcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJibWlfMlwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImNoZF8yXCIsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiaHlwZXJ0ZW5fMlwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImFnZV8zXCIsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiY2lncGRheV8zXCIsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiYm1pXzNcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCJjaGRfM1wiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcImh5cGVydGVuXzNcIiksIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAjIENub2RlcyA9IGMoXCJjZW5zXzFcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgIyAgICAgICAgICBcImNlbnNfMlwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICMgICAgICAgIFwiY2Vuc18zXCIpLFxuICAgICAgICAgICAgICAgICAgICAgICAgICBZbm9kZXMgPSBZbm9kZXMsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICBzdXJ2aXZhbE91dGNvbWUgPSBUUlVFLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgcmVnaW1lcyA9IHJlZ2ltZXMsXG4gICAgICAgICAgICAgICAgICAgICAgICAgIHN1bW1hcnkubWVhc3VyZXMgPSBzdW1tYXJ5Lm1lYXN1cmVzLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgZmluYWwuWW5vZGVzID0gWW5vZGVzLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgd29ya2luZy5tc20gPSBcIlkgfiBzdW1fY2hvbFwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgZ2NvbXAgPSBUUlVFKVxuYGBgIn0= -->
+<pre class="r"><code># get the gcomputation version
+results_gcomp_sim &lt;- ltmleMSM(data = frm_for_ltmle_sim, 
+                          Anodes = c(&quot;totchol_1&quot;, 
+                                     &quot;totchol_2&quot;, 
+                                     &quot;totchol_3&quot;), 
+                          Lnodes = c(&quot;sex&quot;, 
+                                     &quot;educ&quot;, 
+                                     &quot;age_1&quot;, 
+                                     &quot;cigpday_1&quot;, 
+                                     &quot;bmi_1&quot;, 
+                                     &quot;chd_1&quot;, 
+                                     &quot;hyperten_1&quot;, 
+                                     &quot;age_2&quot;, 
+                                     &quot;cigpday_2&quot;, 
+                                     &quot;bmi_2&quot;, 
+                                     &quot;chd_2&quot;, 
+                                     &quot;hyperten_2&quot;, 
+                                     &quot;age_3&quot;, 
+                                     &quot;cigpday_3&quot;, 
+                                     &quot;bmi_3&quot;, 
+                                     &quot;chd_3&quot;, 
+                                     &quot;hyperten_3&quot;), 
+                          # Cnodes = c(&quot;cens_1&quot;, 
+                            #          &quot;cens_2&quot;, 
+                              #        &quot;cens_3&quot;),
+                          Ynodes = Ynodes, 
+                          survivalOutcome = TRUE, 
+                          regimes = regimes,
+                          summary.measures = summary.measures, 
+                          final.Ynodes = Ynodes, 
+                          working.msm = &quot;Y ~ sum_chol&quot;, 
+                          gcomp = TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cbk5vdGU6IGZvciBpbnRlcm5hbCBwdXJwb3NlcywgYWxsIG5vZGVzIGFmdGVyIGEgY2Vuc29yaW5nIGV2ZW50IGFyZSBzZXQgdG8gTkEgYW5kIFxuIGFsbCBub2RlcyAoZXhjZXB0IFlub2RlcykgYXJlIHNldCB0byBOQSBhZnRlciBZPTEgaWYgc3Vydml2YWxGdW5jdGlvbiBpcyBUUlVFIChvciBpZiBzcGVjaWZpZWQgYnkgZGV0ZXJtaW5pc3RpYy5RLmZ1bmN0aW9uKS5cbiBZb3VyIGRhdGEgZGlkIG5vdCBjb25mb3JtIGFuZCBoYXMgYmVlbiBhZGp1c3RlZC4gVGhpcyBtYXkgYmUgcmVsZXZhbnQgaWYgeW91IGFyZSBcbiB3cml0aW5nIHlvdXIgb3duIGRldGVybWluaXN0aWMgZnVuY3Rpb24ocykgb3IgZGVidWdnaW5nIGx0bWxlLlxuTm90ZTogZm9yIGludGVybmFsIHB1cnBvc2VzLCBhbGwgbm9kZXMgYWZ0ZXIgYSBjZW5zb3JpbmcgZXZlbnQgYXJlIHNldCB0byBOQSBhbmQgXG4gYWxsIG5vZGVzIChleGNlcHQgWW5vZGVzKSBhcmUgc2V0IHRvIE5BIGFmdGVyIFk9MSBpZiBzdXJ2aXZhbEZ1bmN0aW9uIGlzIFRSVUUgKG9yIGlmIHNwZWNpZmllZCBieSBkZXRlcm1pbmlzdGljLlEuZnVuY3Rpb24pLlxuIFlvdXIgZGF0YSBkaWQgbm90IGNvbmZvcm0gYW5kIGhhcyBiZWVuIGFkanVzdGVkLiBUaGlzIG1heSBiZSByZWxldmFudCBpZiB5b3UgYXJlIFxuIHdyaXRpbmcgeW91ciBvd24gZGV0ZXJtaW5pc3RpYyBmdW5jdGlvbihzKSBvciBkZWJ1Z2dpbmcgbHRtbGUuXG5Ob3RlOiBmb3IgaW50ZXJuYWwgcHVycG9zZXMsIGFsbCBub2RlcyBhZnRlciBhIGNlbnNvcmluZyBldmVudCBhcmUgc2V0IHRvIE5BIGFuZCBcbiBhbGwgbm9kZXMgKGV4Y2VwdCBZbm9kZXMpIGFyZSBzZXQgdG8gTkEgYWZ0ZXIgWT0xIGlmIHN1cnZpdmFsRnVuY3Rpb24gaXMgVFJVRSAob3IgaWYgc3BlY2lmaWVkIGJ5IGRldGVybWluaXN0aWMuUS5mdW5jdGlvbikuXG4gWW91ciBkYXRhIGRpZCBub3QgY29uZm9ybSBhbmQgaGFzIGJlZW4gYWRqdXN0ZWQuIFRoaXMgbWF5IGJlIHJlbGV2YW50IGlmIHlvdSBhcmUgXG4gd3JpdGluZyB5b3VyIG93biBkZXRlcm1pbmlzdGljIGZ1bmN0aW9uKHMpIG9yIGRlYnVnZ2luZyBsdG1sZS5cblFmb3JtIG5vdCBzcGVjaWZpZWQsIHVzaW5nIGRlZmF1bHRzOlxuZm9ybXVsYSBmb3Igc3Ryb2tlXzE6XG5RLmtwbHVzMSB+IHNleCArIGVkdWMgKyBhZ2VfMSArIGNpZ3BkYXlfMSArIGJtaV8xICsgY2hkXzEgKyBoeXBlcnRlbl8xICsgICAgIHRvdGNob2xfMVxuZm9ybXVsYSBmb3Igc3Ryb2tlXzI6XG5RLmtwbHVzMSB+IHNleCArIGVkdWMgKyBhZ2VfMSArIGNpZ3BkYXlfMSArIGJtaV8xICsgY2hkXzEgKyBoeXBlcnRlbl8xICsgICAgIHRvdGNob2xfMSArIGFnZV8yICsgY2lncGRheV8yICsgYm1pXzIgKyBjaGRfMiArIGh5cGVydGVuXzIgKyAgICAgdG90Y2hvbF8yXG5mb3JtdWxhIGZvciBzdHJva2VfMzpcblEua3BsdXMxIH4gc2V4ICsgZWR1YyArIGFnZV8xICsgY2lncGRheV8xICsgYm1pXzEgKyBjaGRfMSArIGh5cGVydGVuXzEgKyAgICAgdG90Y2hvbF8xICsgYWdlXzIgKyBjaWdwZGF5XzIgKyBibWlfMiArIGNoZF8yICsgaHlwZXJ0ZW5fMiArICAgICB0b3RjaG9sXzIgKyBhZ2VfMyArIGNpZ3BkYXlfMyArIGJtaV8zICsgY2hkXzMgKyBoeXBlcnRlbl8zICsgICAgIHRvdGNob2xfM1xuXG5nZm9ybSBub3Qgc3BlY2lmaWVkLCB1c2luZyBkZWZhdWx0czpcbmZvcm11bGEgZm9yIHRvdGNob2xfMTpcbnRvdGNob2xfMSB+IHNleCArIGVkdWMgKyBhZ2VfMSArIGNpZ3BkYXlfMSArIGJtaV8xICsgY2hkXzEgKyAgICAgaHlwZXJ0ZW5fMVxuZm9ybXVsYSBmb3IgdG90Y2hvbF8yOlxudG90Y2hvbF8yIH4gc2V4ICsgZWR1YyArIGFnZV8xICsgY2lncGRheV8xICsgYm1pXzEgKyBjaGRfMSArICAgICBoeXBlcnRlbl8xICsgdG90Y2hvbF8xICsgYWdlXzIgKyBjaWdwZGF5XzIgKyBibWlfMiArIGNoZF8yICsgICAgIGh5cGVydGVuXzJcbmZvcm11bGEgZm9yIHRvdGNob2xfMzpcbnRvdGNob2xfMyB+IHNleCArIGVkdWMgKyBhZ2VfMSArIGNpZ3BkYXlfMSArIGJtaV8xICsgY2hkXzEgKyAgICAgaHlwZXJ0ZW5fMSArIHRvdGNob2xfMSArIGFnZV8yICsgY2lncGRheV8yICsgYm1pXzIgKyBjaGRfMiArICAgICBoeXBlcnRlbl8yICsgdG90Y2hvbF8yICsgYWdlXzMgKyBjaWdwZGF5XzMgKyBibWlfMyArIGNoZF8zICsgICAgIGh5cGVydGVuXzNcblxuRXN0aW1hdGUgb2YgdGltZSB0byBjb21wbGV0aW9uOiA8IDEgbWludXRlXG5WYXJpYW5jZSBlc3RpbWF0ZSBpcyBiYXNlZCBvbiBpbmZsdWVuY2UgY3VydmUgb25seSwgd2hpY2ggbWF5IGJlIHNpZ25pZmljYW50bHkgYW50aWNvbnNlcnZhdGl2ZSBiZWNhdXNlIHlvdXIgZGF0YSBhcHBlYXJzIHRvIGNvbnRhaW4gcG9zaXRpdml0eSB2aW9sYXRpb25zLiBSb2J1c3QgdmFyaWFuY2UgZXN0aW1hdGUgaXMgbm90IGN1cnJlbnRseSBhdmFpbGFibGUgd2l0aCBnY29tcCBidXQgdGhpcyB3aWxsIGJlIGFkZHJlc3NlZCBpbiBhIGZ1dHVyZSByZWxlYXNlLlxuIn0= -->
+<pre><code>Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Note: for internal purposes, all nodes after a censoring event are set to NA and 
+ all nodes (except Ynodes) are set to NA after Y=1 if survivalFunction is TRUE (or if specified by deterministic.Q.function).
+ Your data did not conform and has been adjusted. This may be relevant if you are 
+ writing your own deterministic function(s) or debugging ltmle.
+Qform not specified, using defaults:
+formula for stroke_1:
+Q.kplus1 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 + hyperten_1 +     totchol_1
+formula for stroke_2:
+Q.kplus1 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 + hyperten_1 +     totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 + hyperten_2 +     totchol_2
+formula for stroke_3:
+Q.kplus1 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 + hyperten_1 +     totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 + hyperten_2 +     totchol_2 + age_3 + cigpday_3 + bmi_3 + chd_3 + hyperten_3 +     totchol_3
+
+gform not specified, using defaults:
+formula for totchol_1:
+totchol_1 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 +     hyperten_1
+formula for totchol_2:
+totchol_2 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 +     hyperten_1 + totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 +     hyperten_2
+formula for totchol_3:
+totchol_3 ~ sex + educ + age_1 + cigpday_1 + bmi_1 + chd_1 +     hyperten_1 + totchol_1 + age_2 + cigpday_2 + bmi_2 + chd_2 +     hyperten_2 + totchol_2 + age_3 + cigpday_3 + bmi_3 + chd_3 +     hyperten_3
+
+Estimate of time to completion: &lt; 1 minute
+Variance estimate is based on influence curve only, which may be significantly anticonservative because your data appears to contain positivity violations. Robust variance estimate is not currently available with gcomp but this will be addressed in a future release.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBkaXNwbGF5IHJlc3VsdHNcbnN1bW1hcnkocmVzdWx0c19pcHR3X3RtbGVfc2ltLCBcInRtbGVcIilcbmBgYCJ9 -->
+<pre class="r"><code># display results
+summary(results_iptw_tmle_sim, &quot;tmle&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXN0aW1hdG9yOiAgdG1sZSBcbiAgICAgICAgICAgIEVzdGltYXRlIFN0ZC4gRXJyb3IgIENJIDIuNSUgQ0kgOTcuNSUgIHAtdmFsdWUgICAgXG4oSW50ZXJjZXB0KSAtMi4zMDY3MyAgICAwLjA4NTA5IC0yLjQ3MzUwICAgLTIuMTQwICA8IDJlLTE2ICoqKlxuc3VtX2Nob2wgICAgIDAuMTQzNzEgICAgMC4wMzQyMSAgMC4wNzY2NSAgICAwLjIxMSAyLjY3ZS0wNSAqKipcbi0tLVxuU2lnbmlmLiBjb2RlczogIDAg4oCYKioq4oCZIDAuMDAxIOKAmCoq4oCZIDAuMDEg4oCYKuKAmSAwLjA1IOKAmC7igJkgMC4xIOKAmCDigJkgMVxuIn0= -->
+<pre><code>Estimator:  tmle 
+            Estimate Std. Error  CI 2.5% CI 97.5%  p-value    
+(Intercept) -2.30673    0.08509 -2.47350   -2.140  &lt; 2e-16 ***
+sum_chol     0.14371    0.03421  0.07665    0.211 2.67e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShyZXN1bHRzX2lwdHdfdG1sZV9zaW0sIFwiaXB0d1wiKVxuYGBgIn0= -->
+<pre class="r"><code>summary(results_iptw_tmle_sim, &quot;iptw&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXN0aW1hdG9yOiAgaXB0dyBcbiAgICAgICAgICAgIEVzdGltYXRlIFN0ZC4gRXJyb3IgIENJIDIuNSUgQ0kgOTcuNSUgIHAtdmFsdWUgICAgXG4oSW50ZXJjZXB0KSAtMi4yOTc3NyAgICAwLjA4NzQ2IC0yLjQ2OTE5ICAgLTIuMTI2ICA8IDJlLTE2ICoqKlxuc3VtX2Nob2wgICAgIDAuMTM5OTggICAgMC4wMzU0OCAgMC4wNzA0NCAgICAwLjIxMCA3Ljk3ZS0wNSAqKipcbi0tLVxuU2lnbmlmLiBjb2RlczogIDAg4oCYKioq4oCZIDAuMDAxIOKAmCoq4oCZIDAuMDEg4oCYKuKAmSAwLjA1IOKAmC7igJkgMC4xIOKAmCDigJkgMVxuIn0= -->
+<pre><code>Estimator:  iptw 
+            Estimate Std. Error  CI 2.5% CI 97.5%  p-value    
+(Intercept) -2.29777    0.08746 -2.46919   -2.126  &lt; 2e-16 ***
+sum_chol     0.13998    0.03548  0.07044    0.210 7.97e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShyZXN1bHRzX2djb21wX3NpbSwgXCJnY29tcFwiKVxuYGBgIn0= -->
+<pre class="r"><code>summary(results_gcomp_sim, &quot;gcomp&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXN0aW1hdG9yOiAgZ2NvbXAgXG5XYXJuaW5nOiBpbmZlcmVuY2UgZm9yIGdjb21wIGlzIG5vdCBhY2N1cmF0ZSEgSXQgaXMgYmFzZWQgb24gVE1MRSBpbmZsdWVuY2UgY3VydmVzLlxuICAgICAgICAgICAgRXN0aW1hdGUgU3RkLiBFcnJvciAgQ0kgMi41JSBDSSA5Ny41JSAgcC12YWx1ZSAgICBcbihJbnRlcmNlcHQpIC0yLjMzMzU1ICAgIDAuMDg2NTcgLTIuNTAzMjMgICAtMi4xNjQgIDwgMmUtMTYgKioqXG5zdW1fY2hvbCAgICAgMC4xNTI5NSAgICAwLjAzNDY2ICAwLjA4NTAzICAgIDAuMjIxIDEuMDJlLTA1ICoqKlxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDigJgqKirigJkgMC4wMDEg4oCYKirigJkgMC4wMSDigJgq4oCZIDAuMDUg4oCYLuKAmSAwLjEg4oCYIOKAmSAxXG4ifQ== -->
+<pre><code>Estimator:  gcomp 
+Warning: inference for gcomp is not accurate! It is based on TMLE influence curves.
+            Estimate Std. Error  CI 2.5% CI 97.5%  p-value    
+(Intercept) -2.33355    0.08657 -2.50323   -2.164  &lt; 2e-16 ***
+sum_chol     0.15295    0.03466  0.08503    0.221 1.02e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCmVkaXRvcl9vcHRpb25zOiANCiAgY2h1bmtfb3V0cHV0X3R5cGU6IGlubGluZQ0KLS0tDQoNCkthdGllJ3MgbHRtbGUgY29kZQ0KDQpgYGB7cn0NCg0KIyBsb2FkIGxpYnJhcmllcw0KbGlicmFyeSh0aWR5dmVyc2UpDQpsaWJyYXJ5KGhlcmUpDQpsaWJyYXJ5KHBhbmRlcikNCmxpYnJhcnkodGlrekRldmljZSkNCmxpYnJhcnkobHRtbGUpDQoNCmBgYA0KDQoNCmBgYHtyIGNoZW4gY29kZX0NCg0KaGVyZSgpDQoNCiMgcnVuIENoZW4ncyBzY3JpcHQgdG8gbWFrZSB0aGUgaW1wdXRlZCBkYXRhc2V0DQpzb3VyY2UoaGVyZTo6aGVyZSgic2NyaXB0cyIsIA0KICAgICAgICAgICAgICAgICAgIjAxLWdldC1kYXRhLlIiKSkNCg0KIyBzYXZlIGZpbGUgdG8gZGlzaw0Kc2F2ZShmcm0ud2lkZSwgDQogICAgIGZpbGUgPSBoZXJlKCJkYXRhIiwgDQogICAgICAgICAgICAgICAgICJmcm1fd2lkZS5yZGF0YSIpKQ0KDQpgYGANCg0KDQpgYGB7ciBsb29raW5nIGF0IHRoZSBkYXRhfQ0KDQojIGxvYWQgaW1wdXRlZCBkYXRhc2V0DQpsb2FkKGZpbGUgPSBoZXJlKCJkYXRhIiwgDQogICAgICAgICAgICAgICAgICJmcm1fd2lkZS5yZGF0YSIpKQ0KDQojIGNoZWNrIG51bWJlciBvZiByb3dzDQpucm93KGZybS53aWRlKQ0KDQojIGNoZWNrIGlmIHdlIGhhdmUgTkFzDQpzdW0oaXMubmEoZnJtLndpZGUpKQ0KDQpgYGANCg0KDQpgYGB7ciByZWFsIGRhdGEgbHRtbGUgcGFja2FnZX0NCg0Kc2V0LnNlZWQoMjUyKQ0KDQojIGxvYWQgaW1wdXRlZCBkYXRhc2V0DQpsb2FkKGZpbGUgPSBoZXJlKCJkYXRhIiwgDQogICAgICAgICAgICAgICAgICJmcm1fd2lkZS5yZGF0YSIpKQ0KDQojIHJlb3JkZXIgZGF0YQ0KZnJtX3RpbWVfb3JkZXIgPC0gZnJtLndpZGUgJT4lIA0KICBzZWxlY3QoInNleCIsIA0KICAgICAgICAgImVkdWMiLCANCiAgICAgICAgICJhZ2VfMSIsIA0KICAgICAgICAgImNpZ3BkYXlfMSIsIA0KICAgICAgICAgImJtaV8xIiwgDQogICAgICAgICAiY2hkXzEiLCANCiAgICAgICAgICJoeXBlcnRlbl8xIiwgDQogICAgICAgICAiY2Vuc18xIiwNCiAgICAgICAgICJ0b3RjaG9sXzEiLCANCiAgICAgICAgICJzdHJva2VfMSIsIA0KICAgICAgICAgImFnZV8yIiwgDQogICAgICAgICAiY2lncGRheV8yIiwgDQogICAgICAgICAiYm1pXzIiLCANCiAgICAgICAgICJjaGRfMiIsIA0KICAgICAgICAgImh5cGVydGVuXzIiLCANCiAgICAgICAgICJjZW5zXzIiLA0KICAgICAgICAgInRvdGNob2xfMiIsIA0KICAgICAgICAgInN0cm9rZV8yIiwgDQogICAgICAgICAiYWdlXzMiLCANCiAgICAgICAgICJjaWdwZGF5XzMiLCANCiAgICAgICAgICJibWlfMyIsIA0KICAgICAgICAgImNoZF8zIiwgDQogICAgICAgICAiaHlwZXJ0ZW5fMyIsIA0KICAgICAgICAgImNlbnNfMyIsDQogICAgICAgICAidG90Y2hvbF8zIiwgDQogICAgICAgICAic3Ryb2tlXzMiKQ0KDQojIHJlY29kZSBzdHJva2UgdG8gbWltaWMgc3Vydml2YWwgKG1ha2UgaXQgMSBwZXJtYW5lbnRseSkNCmZybV9mb3JfbHRtbGUgPC0gZnJtX3RpbWVfb3JkZXIgJT4lIA0KICBtdXRhdGUoc3Ryb2tlXzIgPSBpZmVsc2Uoc3Ryb2tlXzEgPT0gMSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAxLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cm9rZV8yKSwgDQogICAgICAgICBzdHJva2VfMyA9IGlmZWxzZShzdHJva2VfMiA9PSAxLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgIDEsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgc3Ryb2tlXzMpKQ0KDQojIHNldCBuIGVxdWFsIHRvIG51bWJlciBvZiByb3dzDQpuID0gbnJvdyhmcm0ud2lkZSkNCg0KIyBpbml0aWFsaXplIHJlZ2ltZXMgDQojIGRpbSBuIA0KIyBudW0gQW5vZGVzID0gMyAoPykNCiMgbnVtIENGIHJlZ2ltZXMgPSA4ICg/IDIgeCAyIHggMikNCnJlZ2ltZXMgPC0gbGlzdChmdW5jdGlvbihyb3cpIGMoMSwxLDEpLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMSwxLDApLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMSwwLDEpLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMSwwLDApLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMCwxLDEpLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMCwxLDApLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMCwwLDEpLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMCwwLDApKQ0KDQojIG1ha2Ugc3VtbWFyeSBtZWFzdXJlcyAobnVtYmVyIG9mIHJlZ2ltZXMsIG51bWJlciBvZiBBbm9kZXMsIHRpbWUpDQpzdW1tYXJ5Lm1lYXN1cmVzIDwtIGFycmF5KGRpbSA9IGMoOCwgMSwgMykpDQoNCmRpbW5hbWVzKHN1bW1hcnkubWVhc3VyZXMpW1syXV0gPC0gYygic3VtX2Nob2wiKQ0KDQojIHRvdGFsIHRpbWVzIGJhZCBjaG9sZXN0ZXJvbA0Kc3VtbWFyeS5tZWFzdXJlc1ssICwgMV0gPC0gYygxLDEsMSwxLDAsMCwwLDApDQpzdW1tYXJ5Lm1lYXN1cmVzWywgLCAyXSA8LSBjKDIsMiwxLDEsMSwxLDAsMCkNCnN1bW1hcnkubWVhc3VyZXNbLCAsIDNdIDwtIGMoMywyLDIsMSwyLDEsMSwwKQ0KDQpZbm9kZXMgPSBjKCJzdHJva2VfMSIsIA0KICAgICAgICAgICAic3Ryb2tlXzIiLCANCiAgICAgICAgICAgInN0cm9rZV8zIikNCg0KIyBnZXQgaXB0dyBhbmQgdG1sZQ0KcmVzdWx0c19pcHR3X3RtbGUgPC0gbHRtbGVNU00oZGF0YSA9IGZybV9mb3JfbHRtbGUsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQW5vZGVzID0gYygidG90Y2hvbF8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ0b3RjaG9sXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgInRvdGNob2xfMyIpLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIExub2RlcyA9IGMoInNleCIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZWR1YyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYWdlXzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNpZ3BkYXlfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYm1pXzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNoZF8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJoeXBlcnRlbl8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZ2VfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2lncGRheV8yIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJibWlfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hkXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImh5cGVydGVuXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImFnZV8zIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaWdwZGF5XzMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImJtaV8zIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaGRfMyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaHlwZXJ0ZW5fMyIpLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIENub2RlcyA9IGMoImNlbnNfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2Vuc18yIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjZW5zXzMiKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFlub2RlcyA9IFlub2RlcywgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzdXJ2aXZhbE91dGNvbWUgPSBUUlVFLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJlZ2ltZXMgPSByZWdpbWVzLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc3VtbWFyeS5tZWFzdXJlcyA9IHN1bW1hcnkubWVhc3VyZXMsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZmluYWwuWW5vZGVzID0gWW5vZGVzLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHdvcmtpbmcubXNtID0gIlkgfiBzdW1fY2hvbCIpDQoNCiMgZ2V0IHRoZSBnY29tcHV0YXRpb24gdmVyc2lvbg0KcmVzdWx0c19nY29tcCA8LSBsdG1sZU1TTShkYXRhID0gZnJtX2Zvcl9sdG1sZSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgIEFub2RlcyA9IGMoInRvdGNob2xfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ0b3RjaG9sXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAidG90Y2hvbF8zIiksIA0KICAgICAgICAgICAgICAgICAgICAgICAgICBMbm9kZXMgPSBjKCJzZXgiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZWR1YyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZ2VfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaWdwZGF5XzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYm1pXzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hkXzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaHlwZXJ0ZW5fMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZ2VfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaWdwZGF5XzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYm1pXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hkXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaHlwZXJ0ZW5fMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZ2VfMyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaWdwZGF5XzMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYm1pXzMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hkXzMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaHlwZXJ0ZW5fMyIpLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgQ25vZGVzID0gYygiY2Vuc18xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNlbnNfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjZW5zXzMiKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgWW5vZGVzID0gWW5vZGVzLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgc3Vydml2YWxPdXRjb21lID0gVFJVRSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgIHJlZ2ltZXMgPSByZWdpbWVzLA0KICAgICAgICAgICAgICAgICAgICAgICAgICBzdW1tYXJ5Lm1lYXN1cmVzID0gc3VtbWFyeS5tZWFzdXJlcywgDQogICAgICAgICAgICAgICAgICAgICAgICAgIGZpbmFsLllub2RlcyA9IFlub2RlcywgDQogICAgICAgICAgICAgICAgICAgICAgICAgIHdvcmtpbmcubXNtID0gIlkgfiBzdW1fY2hvbCIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICBnY29tcCA9IFRSVUUpDQoNCiMgZGlzcGxheSByZXN1bHRzDQpzdW1tYXJ5KHJlc3VsdHNfaXB0d190bWxlLCAidG1sZSIpDQpzdW1tYXJ5KHJlc3VsdHNfaXB0d190bWxlLCAiaXB0dyIpDQpzdW1tYXJ5KHJlc3VsdHNfZ2NvbXAsICJnY29tcCIpDQoNCmBgYA0KDQoNCmBgYHtyIHNpbXVsYXRlZCBkYXRhIGx0bWxlIHBhY2thZ2V9DQoNCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShoZXJlKQ0KbGlicmFyeShwYW5kZXIpDQpsaWJyYXJ5KHRpa3pEZXZpY2UpDQpsaWJyYXJ5KGx0bWxlKQ0KDQojIHJ1biBDaGVuJ3Mgc2NyaXB0IHRvIG1ha2UgdGhlIHNpbXVsYXRlZCBkYXRhc2V0DQpzb3VyY2UoaGVyZTo6aGVyZSgic2NyaXB0cyIsIA0KICAgICAgICAgICAgICAgICAgIjAyLXNpbXVsYXRpb24uUiIpKQ0KDQojIHNhdmUgaXQNCnNhdmUoZnJtLnNpbSwgDQogICAgIGZpbGUgPSBoZXJlKCJkYXRhIiwgDQogICAgICAgICAgICAgICAgICJmcm0uc2ltLnJkYXRhIikpDQoNCiMgc2ltdWxhdGVkIGx0bWxlIHJlc3VsdHMNCg0KIyByZW9yZGVyIGRhdGENCmZybV90aW1lX29yZGVyX3NpbSA8LSBmcm0uc2ltICU+JSANCiAgc2VsZWN0KCJzZXgiLCANCiAgICAgICAgICJlZHVjIiwgDQogICAgICAgICAiYWdlXzEiLCANCiAgICAgICAgICJjaWdwZGF5XzEiLCANCiAgICAgICAgICJibWlfMSIsIA0KICAgICAgICAgImNoZF8xIiwgDQogICAgICAgICAiaHlwZXJ0ZW5fMSIsIA0KICAgICAgICAgImNlbnNfMSIsDQogICAgICAgICAidG90Y2hvbF8xIiwgDQogICAgICAgICAic3Ryb2tlXzEiLCANCiAgICAgICAgICJhZ2VfMiIsIA0KICAgICAgICAgImNpZ3BkYXlfMiIsIA0KICAgICAgICAgImJtaV8yIiwgDQogICAgICAgICAiY2hkXzIiLCANCiAgICAgICAgICJoeXBlcnRlbl8yIiwgDQogICAgICAgICAiY2Vuc18yIiwNCiAgICAgICAgICJ0b3RjaG9sXzIiLCANCiAgICAgICAgICJzdHJva2VfMiIsIA0KICAgICAgICAgImFnZV8zIiwgDQogICAgICAgICAiY2lncGRheV8zIiwgDQogICAgICAgICAiYm1pXzMiLCANCiAgICAgICAgICJjaGRfMyIsIA0KICAgICAgICAgImh5cGVydGVuXzMiLCANCiAgICAgICAgICJjZW5zXzMiLA0KICAgICAgICAgInRvdGNob2xfMyIsIA0KICAgICAgICAgInN0cm9rZV8zIikNCg0KIyByZWNvZGUgc3Ryb2tlIHRvIG1pbWljIHN1cnZpdmFsIChtYWtlIGl0IDEgcGVybWFuZW50bHkpDQpmcm1fZm9yX2x0bWxlX3NpbSA8LSBmcm1fdGltZV9vcmRlcl9zaW0gJT4lIA0KICBtdXRhdGUoc3Ryb2tlXzIgPSBpZmVsc2Uoc3Ryb2tlXzEgPT0gMSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAxLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cm9rZV8yKSwgDQogICAgICAgICBzdHJva2VfMyA9IGlmZWxzZShzdHJva2VfMiA9PSAxLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgIDEsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgc3Ryb2tlXzMpKQ0KDQojIHByZXZhbGVudCBzdHJva2U/DQoNCiMgc2V0IG4gZXF1YWwgdG8gbnVtYmVyIG9mIHJvd3MNCm4gPSBucm93KGZybV9mb3JfbHRtbGVfc2ltKQ0KDQojIGluaXRpYWxpemUgcmVnaW1lcyANCiMgZGltIG4gDQojIG51bSBBbm9kZXMgPSAzICg/KQ0KIyBudW0gQ0YgcmVnaW1lcyA9IDggKD8gMiB4IDIgeCAyKQ0KcmVnaW1lcyA8LSBsaXN0KGZ1bmN0aW9uKHJvdykgYygxLDEsMSksIA0KICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygxLDEsMCksIA0KICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygxLDAsMSksIA0KICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygxLDAsMCksIA0KICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygwLDEsMSksIA0KICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygwLDEsMCksIA0KICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygwLDAsMSksIA0KICAgICAgICAgICAgICAgIGZ1bmN0aW9uKHJvdykgYygwLDAsMCkpDQoNCiMgbWFrZSBzdW1tYXJ5IG1lYXN1cmVzIChudW1iZXIgb2YgcmVnaW1lcywgbnVtYmVyIG9mIEFub2RlcywgdGltZSkNCnN1bW1hcnkubWVhc3VyZXMgPC0gYXJyYXkoZGltID0gYyg4LCAxLCAzKSkNCg0KZGltbmFtZXMoc3VtbWFyeS5tZWFzdXJlcylbWzJdXSA8LSBjKCJzdW1fY2hvbCIpDQoNCiMgdG90YWwgdGltZXMgYmFkIGNob2xlc3Rlcm9sDQpzdW1tYXJ5Lm1lYXN1cmVzWywgLCAxXSA8LSBjKDEsMSwxLDEsMCwwLDAsMCkNCnN1bW1hcnkubWVhc3VyZXNbLCAsIDJdIDwtIGMoMiwyLDEsMSwxLDEsMCwwKQ0Kc3VtbWFyeS5tZWFzdXJlc1ssICwgM10gPC0gYygzLDIsMiwxLDIsMSwxLDApDQoNCllub2RlcyA9IGMoInN0cm9rZV8xIiwgDQogICAgICAgICAgICJzdHJva2VfMiIsIA0KICAgICAgICAgICAic3Ryb2tlXzMiKQ0KDQojIGdldCBpcHR3IGFuZCB0bWxlDQpyZXN1bHRzX2lwdHdfdG1sZV9zaW0gPC0gbHRtbGVNU00oZGF0YSA9IGZybV9mb3JfbHRtbGVfc2ltLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEFub2RlcyA9IGMoInRvdGNob2xfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAidG90Y2hvbF8yIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ0b3RjaG9sXzMiKSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICBMbm9kZXMgPSBjKCJzZXgiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImVkdWMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImFnZV8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaWdwZGF5XzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImJtaV8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaGRfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaHlwZXJ0ZW5fMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYWdlXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNpZ3BkYXlfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYm1pXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNoZF8yIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJoeXBlcnRlbl8yIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZ2VfMyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2lncGRheV8zIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJibWlfMyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hkXzMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImh5cGVydGVuXzMiKSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDbm9kZXMgPSBjKCJjZW5zXzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNlbnNfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2Vuc18zIiksDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICBZbm9kZXMgPSBZbm9kZXMsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc3Vydml2YWxPdXRjb21lID0gVFJVRSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZWdpbWVzID0gcmVnaW1lcywNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN1bW1hcnkubWVhc3VyZXMgPSBzdW1tYXJ5Lm1lYXN1cmVzLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZpbmFsLllub2RlcyA9IFlub2RlcywgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICB3b3JraW5nLm1zbSA9ICJZIH4gc3VtX2Nob2wiKQ0KDQojIGdldCB0aGUgZ2NvbXB1dGF0aW9uIHZlcnNpb24NCnJlc3VsdHNfZ2NvbXBfc2ltIDwtIGx0bWxlTVNNKGRhdGEgPSBmcm1fZm9yX2x0bWxlX3NpbSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgIEFub2RlcyA9IGMoInRvdGNob2xfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ0b3RjaG9sXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAidG90Y2hvbF8zIiksIA0KICAgICAgICAgICAgICAgICAgICAgICAgICBMbm9kZXMgPSBjKCJzZXgiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZWR1YyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZ2VfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaWdwZGF5XzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYm1pXzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hkXzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaHlwZXJ0ZW5fMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZ2VfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaWdwZGF5XzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYm1pXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hkXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaHlwZXJ0ZW5fMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZ2VfMyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaWdwZGF5XzMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYm1pXzMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hkXzMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaHlwZXJ0ZW5fMyIpLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgQ25vZGVzID0gYygiY2Vuc18xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNlbnNfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjZW5zXzMiKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgWW5vZGVzID0gWW5vZGVzLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgc3Vydml2YWxPdXRjb21lID0gVFJVRSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgIHJlZ2ltZXMgPSByZWdpbWVzLA0KICAgICAgICAgICAgICAgICAgICAgICAgICBzdW1tYXJ5Lm1lYXN1cmVzID0gc3VtbWFyeS5tZWFzdXJlcywgDQogICAgICAgICAgICAgICAgICAgICAgICAgIGZpbmFsLllub2RlcyA9IFlub2RlcywgDQogICAgICAgICAgICAgICAgICAgICAgICAgIHdvcmtpbmcubXNtID0gIlkgfiBzdW1fY2hvbCIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICBnY29tcCA9IFRSVUUpDQoNCg0KIyBkaXNwbGF5IHJlc3VsdHMNCnN1bW1hcnkocmVzdWx0c19pcHR3X3RtbGVfc2ltLCAidG1sZSIpDQpzdW1tYXJ5KHJlc3VsdHNfaXB0d190bWxlX3NpbSwgImlwdHciKQ0Kc3VtbWFyeShyZXN1bHRzX2djb21wX3NpbSwgImdjb21wIikNCg0KDQoNCmBgYA0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCmVkaXRvcl9vcHRpb25zOiANCiAgY2h1bmtfb3V0cHV0X3R5cGU6IGlubGluZQ0KLS0tDQoNCkthdGllJ3MgbHRtbGUgY29kZQ0KDQpgYGB7cn0NCg0KIyBsb2FkIGxpYnJhcmllcw0KbGlicmFyeSh0aWR5dmVyc2UpDQpsaWJyYXJ5KGhlcmUpDQpsaWJyYXJ5KHBhbmRlcikNCmxpYnJhcnkodGlrekRldmljZSkNCmxpYnJhcnkobHRtbGUpDQoNCmBgYA0KDQoNCmBgYHtyIGNoZW4gY29kZX0NCg0KaGVyZSgpDQoNCiMgcnVuIENoZW4ncyBzY3JpcHQgdG8gbWFrZSB0aGUgaW1wdXRlZCBkYXRhc2V0DQpzb3VyY2UoaGVyZTo6aGVyZSgic2NyaXB0cyIsIA0KICAgICAgICAgICAgICAgICAgIjAxLWdldC1kYXRhLlIiKSkNCg0KIyBzYXZlIGZpbGUgdG8gZGlzaw0Kc2F2ZShmcm0ud2lkZSwgDQogICAgIGZpbGUgPSBoZXJlKCJkYXRhIiwgDQogICAgICAgICAgICAgICAgICJmcm1fd2lkZS5yZGF0YSIpKQ0KDQpgYGANCg0KDQpgYGB7ciBsb29raW5nIGF0IHRoZSBkYXRhfQ0KDQojIGxvYWQgaW1wdXRlZCBkYXRhc2V0DQpsb2FkKGZpbGUgPSBoZXJlKCJkYXRhIiwgDQogICAgICAgICAgICAgICAgICJmcm1fd2lkZS5yZGF0YSIpKQ0KDQojIGNoZWNrIG51bWJlciBvZiByb3dzDQpucm93KGZybS53aWRlKQ0KDQojIGNoZWNrIGlmIHdlIGhhdmUgTkFzDQpzdW0oaXMubmEoZnJtLndpZGUpKQ0KDQpgYGANCg0KDQpgYGB7ciByZWFsIGRhdGEgbHRtbGUgcGFja2FnZX0NCg0Kc2V0LnNlZWQoMjUyKQ0KDQojIGxvYWQgaW1wdXRlZCBkYXRhc2V0DQpsb2FkKGZpbGUgPSBoZXJlKCJkYXRhIiwgDQogICAgICAgICAgICAgICAgICJmcm1fd2lkZS5yZGF0YSIpKQ0KDQojIHJlb3JkZXIgZGF0YQ0KZnJtX3RpbWVfb3JkZXIgPC0gZnJtLndpZGUgJT4lIA0KICBzZWxlY3QoInNleCIsIA0KICAgICAgICAgImVkdWMiLCANCiAgICAgICAgICJhZ2VfMSIsIA0KICAgICAgICAgImNpZ3BkYXlfMSIsIA0KICAgICAgICAgImJtaV8xIiwgDQogICAgICAgICAiY2hkXzEiLCANCiAgICAgICAgICJoeXBlcnRlbl8xIiwgDQogICAgICAgICAiY2Vuc18xIiwNCiAgICAgICAgICJ0b3RjaG9sXzEiLCANCiAgICAgICAgICJzdHJva2VfMSIsIA0KICAgICAgICAgImFnZV8yIiwgDQogICAgICAgICAiY2lncGRheV8yIiwgDQogICAgICAgICAiYm1pXzIiLCANCiAgICAgICAgICJjaGRfMiIsIA0KICAgICAgICAgImh5cGVydGVuXzIiLCANCiAgICAgICAgICJjZW5zXzIiLA0KICAgICAgICAgInRvdGNob2xfMiIsIA0KICAgICAgICAgInN0cm9rZV8yIiwgDQogICAgICAgICAiYWdlXzMiLCANCiAgICAgICAgICJjaWdwZGF5XzMiLCANCiAgICAgICAgICJibWlfMyIsIA0KICAgICAgICAgImNoZF8zIiwgDQogICAgICAgICAiaHlwZXJ0ZW5fMyIsIA0KICAgICAgICAgImNlbnNfMyIsDQogICAgICAgICAidG90Y2hvbF8zIiwgDQogICAgICAgICAic3Ryb2tlXzMiKQ0KDQojIHJlY29kZSBzdHJva2UgdG8gbWltaWMgc3Vydml2YWwgKG1ha2UgaXQgMSBwZXJtYW5lbnRseSkNCmZybV9mb3JfbHRtbGUgPC0gZnJtX3RpbWVfb3JkZXIgJT4lIA0KICBtdXRhdGUoc3Ryb2tlXzIgPSBpZmVsc2Uoc3Ryb2tlXzEgPT0gMSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAxLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cm9rZV8yKSwgDQogICAgICAgICBzdHJva2VfMyA9IGlmZWxzZShzdHJva2VfMiA9PSAxLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgIDEsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgc3Ryb2tlXzMpKQ0KDQojIHNldCBuIGVxdWFsIHRvIG51bWJlciBvZiByb3dzDQpuID0gbnJvdyhmcm0ud2lkZSkNCg0KIyBpbml0aWFsaXplIHJlZ2ltZXMgDQojIGRpbSBuIA0KIyBudW0gQW5vZGVzID0gMyAoPykNCiMgbnVtIENGIHJlZ2ltZXMgPSA4ICg/IDIgeCAyIHggMikNCnJlZ2ltZXMgPC0gbGlzdChmdW5jdGlvbihyb3cpIGMoMSwxLDEpLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMSwxLDApLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMSwwLDEpLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMSwwLDApLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMCwxLDEpLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMCwxLDApLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMCwwLDEpLCANCiAgICAgICAgICAgICAgICBmdW5jdGlvbihyb3cpIGMoMCwwLDApKQ0KDQojIG1ha2Ugc3VtbWFyeSBtZWFzdXJlcyAobnVtYmVyIG9mIHJlZ2ltZXMsIG51bWJlciBvZiBBbm9kZXMsIHRpbWUpDQpzdW1tYXJ5Lm1lYXN1cmVzIDwtIGFycmF5KGRpbSA9IGMoOCwgMSwgMykpDQoNCmRpbW5hbWVzKHN1bW1hcnkubWVhc3VyZXMpW1syXV0gPC0gYygic3VtX2Nob2wiKQ0KDQojIHRvdGFsIHRpbWVzIGJhZCBjaG9sZXN0ZXJvbA0Kc3VtbWFyeS5tZWFzdXJlc1ssICwgMV0gPC0gYygxLDEsMSwxLDAsMCwwLDApDQpzdW1tYXJ5Lm1lYXN1cmVzWywgLCAyXSA8LSBjKDIsMiwxLDEsMSwxLDAsMCkNCnN1bW1hcnkubWVhc3VyZXNbLCAsIDNdIDwtIGMoMywyLDIsMSwyLDEsMSwwKQ0KDQpZbm9kZXMgPSBjKCJzdHJva2VfMSIsIA0KICAgICAgICAgICAic3Ryb2tlXzIiLCANCiAgICAgICAgICAgInN0cm9rZV8zIikNCg0KIyBnZXQgaXB0dyBhbmQgdG1sZQ0KcmVzdWx0c19pcHR3X3RtbGUgPC0gbHRtbGVNU00oZGF0YSA9IGZybV9mb3JfbHRtbGUsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQW5vZGVzID0gYygidG90Y2hvbF8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ0b3RjaG9sXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgInRvdGNob2xfMyIpLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIExub2RlcyA9IGMoInNleCIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZWR1YyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYWdlXzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNpZ3BkYXlfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYm1pXzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNoZF8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJoeXBlcnRlbl8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZ2VfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2lncGRheV8yIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJibWlfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hkXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImh5cGVydGVuXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImFnZV8zIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaWdwZGF5XzMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImJtaV8zIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaGRfMyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaHlwZXJ0ZW5fMyIpLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIENub2RlcyA9IGMoImNlbnNfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2Vuc18yIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjZW5zXzMiKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFlub2RlcyA9IFlub2RlcywgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzdXJ2aXZhbE91dGNvbWUgPSBUUlVFLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJlZ2ltZXMgPSByZWdpbWVzLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc3VtbWFyeS5tZWFzdXJlcyA9IHN1bW1hcnkubWVhc3VyZXMsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZmluYWwuWW5vZGVzID0gWW5vZGVzLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHdvcmtpbmcubXNtID0gIlkgfiBzdW1fY2hvbCIpDQoNCiMgZ2V0IHRoZSBnY29tcHV0YXRpb24gdmVyc2lvbg0KcmVzdWx0c19nY29tcCA8LSBsdG1sZU1TTShkYXRhID0gZnJtX2Zvcl9sdG1sZSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgIEFub2RlcyA9IGMoInRvdGNob2xfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ0b3RjaG9sXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAidG90Y2hvbF8zIiksIA0KICAgICAgICAgICAgICAgICAgICAgICAgICBMbm9kZXMgPSBjKCJzZXgiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZWR1YyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZ2VfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaWdwZGF5XzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYm1pXzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hkXzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaHlwZXJ0ZW5fMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZ2VfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaWdwZGF5XzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYm1pXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hkXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaHlwZXJ0ZW5fMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZ2VfMyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaWdwZGF5XzMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYm1pXzMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hkXzMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaHlwZXJ0ZW5fMyIpLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgQ25vZGVzID0gYygiY2Vuc18xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNlbnNfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjZW5zXzMiKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgWW5vZGVzID0gWW5vZGVzLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgc3Vydml2YWxPdXRjb21lID0gVFJVRSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgIHJlZ2ltZXMgPSByZWdpbWVzLA0KICAgICAgICAgICAgICAgICAgICAgICAgICBzdW1tYXJ5Lm1lYXN1cmVzID0gc3VtbWFyeS5tZWFzdXJlcywgDQogICAgICAgICAgICAgICAgICAgICAgICAgIGZpbmFsLllub2RlcyA9IFlub2RlcywgDQogICAgICAgICAgICAgICAgICAgICAgICAgIHdvcmtpbmcubXNtID0gIlkgfiBzdW1fY2hvbCIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICBnY29tcCA9IFRSVUUpDQoNCiMgZGlzcGxheSByZXN1bHRzDQpzdW1tYXJ5KHJlc3VsdHNfaXB0d190bWxlLCAidG1sZSIpDQpzdW1tYXJ5KHJlc3VsdHNfaXB0d190bWxlLCAiaXB0dyIpDQpzdW1tYXJ5KHJlc3VsdHNfZ2NvbXAsICJnY29tcCIpDQoNCmBgYA0KDQoNCmBgYHtyIHNpbXVsYXRlZCBkYXRhIGx0bWxlIHBhY2thZ2V9DQoNCnNldC5zZWVkKDI1MikNCg0KbGlicmFyeSh0aWR5dmVyc2UpDQpsaWJyYXJ5KGhlcmUpDQpsaWJyYXJ5KHBhbmRlcikNCmxpYnJhcnkodGlrekRldmljZSkNCmxpYnJhcnkobHRtbGUpDQoNCiMgcnVuIENoZW4ncyBzY3JpcHQgdG8gbWFrZSB0aGUgc2ltdWxhdGVkIGRhdGFzZXQNCnNvdXJjZShoZXJlOjpoZXJlKCJzY3JpcHRzIiwgDQogICAgICAgICAgICAgICAgICAiMDItc2ltdWxhdGlvbi5SIikpDQoNCiMgc2F2ZSBpdA0Kc2F2ZShmcm0uc2ltLCANCiAgICAgZmlsZSA9IGhlcmUoImRhdGEiLCANCiAgICAgICAgICAgICAgICAgImZybS5zaW0ucmRhdGEiKSkNCg0KIyBzaW11bGF0ZWQgbHRtbGUgcmVzdWx0cw0KDQojIHJlb3JkZXIgZGF0YQ0KZnJtX3RpbWVfb3JkZXJfc2ltIDwtIGZybS5zaW0gJT4lIA0KICBzZWxlY3QoInNleCIsIA0KICAgICAgICAgImVkdWMiLCANCiAgICAgICAgICJhZ2VfMSIsIA0KICAgICAgICAgImNpZ3BkYXlfMSIsIA0KICAgICAgICAgImJtaV8xIiwgDQogICAgICAgICAiY2hkXzEiLCANCiAgICAgICAgICJoeXBlcnRlbl8xIiwgDQogICAgICAgICAidG90Y2hvbF8xIiwgDQogICAgICAgICAic3Ryb2tlXzEiLCANCiAgICAgICAgICJhZ2VfMiIsIA0KICAgICAgICAgImNpZ3BkYXlfMiIsIA0KICAgICAgICAgImJtaV8yIiwgDQogICAgICAgICAiY2hkXzIiLCANCiAgICAgICAgICJoeXBlcnRlbl8yIiwgDQogICAgICAgICAidG90Y2hvbF8yIiwgDQogICAgICAgICAic3Ryb2tlXzIiLCANCiAgICAgICAgICJhZ2VfMyIsIA0KICAgICAgICAgImNpZ3BkYXlfMyIsIA0KICAgICAgICAgImJtaV8zIiwgDQogICAgICAgICAiY2hkXzMiLCANCiAgICAgICAgICJoeXBlcnRlbl8zIiwgDQogICAgICAgICAidG90Y2hvbF8zIiwgDQogICAgICAgICAic3Ryb2tlXzMiKQ0KDQojIHJlY29kZSBzdHJva2UgdG8gbWltaWMgc3Vydml2YWwgKG1ha2UgaXQgMSBwZXJtYW5lbnRseSkNCmZybV9mb3JfbHRtbGVfc2ltIDwtIGZybV90aW1lX29yZGVyX3NpbSAlPiUgDQogIG11dGF0ZShzdHJva2VfMiA9IGlmZWxzZShzdHJva2VfMSA9PSAxLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgIDEsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgc3Ryb2tlXzIpLCANCiAgICAgICAgIHN0cm9rZV8zID0gaWZlbHNlKHN0cm9rZV8yID09IDEsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgMSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICBzdHJva2VfMykpDQoNCiMgcHJldmFsZW50IHN0cm9rZT8NCg0KIyBzZXQgbiBlcXVhbCB0byBudW1iZXIgb2Ygcm93cw0KbiA9IG5yb3coZnJtX2Zvcl9sdG1sZV9zaW0pDQoNCiMgaW5pdGlhbGl6ZSByZWdpbWVzIA0KIyBkaW0gbiANCiMgbnVtIEFub2RlcyA9IDMgKD8pDQojIG51bSBDRiByZWdpbWVzID0gOCAoPyAyIHggMiB4IDIpDQpyZWdpbWVzIDwtIGxpc3QoZnVuY3Rpb24ocm93KSBjKDEsMSwxKSwgDQogICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDEsMSwwKSwgDQogICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDEsMCwxKSwgDQogICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDEsMCwwKSwgDQogICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDAsMSwxKSwgDQogICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDAsMSwwKSwgDQogICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDAsMCwxKSwgDQogICAgICAgICAgICAgICAgZnVuY3Rpb24ocm93KSBjKDAsMCwwKSkNCg0KIyBtYWtlIHN1bW1hcnkgbWVhc3VyZXMgKG51bWJlciBvZiByZWdpbWVzLCBudW1iZXIgb2YgQW5vZGVzLCB0aW1lKQ0Kc3VtbWFyeS5tZWFzdXJlcyA8LSBhcnJheShkaW0gPSBjKDgsIDEsIDMpKQ0KDQpkaW1uYW1lcyhzdW1tYXJ5Lm1lYXN1cmVzKVtbMl1dIDwtIGMoInN1bV9jaG9sIikNCg0KIyB0b3RhbCB0aW1lcyBiYWQgY2hvbGVzdGVyb2wNCnN1bW1hcnkubWVhc3VyZXNbLCAsIDFdIDwtIGMoMSwxLDEsMSwwLDAsMCwwKQ0Kc3VtbWFyeS5tZWFzdXJlc1ssICwgMl0gPC0gYygyLDIsMSwxLDEsMSwwLDApDQpzdW1tYXJ5Lm1lYXN1cmVzWywgLCAzXSA8LSBjKDMsMiwyLDEsMiwxLDEsMCkNCg0KWW5vZGVzID0gYygic3Ryb2tlXzEiLCANCiAgICAgICAgICAgInN0cm9rZV8yIiwgDQogICAgICAgICAgICJzdHJva2VfMyIpDQoNCiMgZ2V0IGlwdHcgYW5kIHRtbGUNCnJlc3VsdHNfaXB0d190bWxlX3NpbSA8LSBsdG1sZU1TTShkYXRhID0gZnJtX2Zvcl9sdG1sZV9zaW0sIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQW5vZGVzID0gYygidG90Y2hvbF8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ0b3RjaG9sXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgInRvdGNob2xfMyIpLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIExub2RlcyA9IGMoInNleCIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZWR1YyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYWdlXzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNpZ3BkYXlfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiYm1pXzEiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNoZF8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJoeXBlcnRlbl8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJhZ2VfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2lncGRheV8yIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJibWlfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiY2hkXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImh5cGVydGVuXzIiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImFnZV8zIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaWdwZGF5XzMiLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImJtaV8zIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaGRfMyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiaHlwZXJ0ZW5fMyIpLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICMgQ25vZGVzID0gYygiY2Vuc18xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICMgICAgICAgICAgImNlbnNfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICMgICAgICAgICJjZW5zXzMiKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFlub2RlcyA9IFlub2RlcywgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzdXJ2aXZhbE91dGNvbWUgPSBUUlVFLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJlZ2ltZXMgPSByZWdpbWVzLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc3VtbWFyeS5tZWFzdXJlcyA9IHN1bW1hcnkubWVhc3VyZXMsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZmluYWwuWW5vZGVzID0gWW5vZGVzLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHdvcmtpbmcubXNtID0gIlkgfiBzdW1fY2hvbCIpDQoNCiMgZ2V0IHRoZSBnY29tcHV0YXRpb24gdmVyc2lvbg0KcmVzdWx0c19nY29tcF9zaW0gPC0gbHRtbGVNU00oZGF0YSA9IGZybV9mb3JfbHRtbGVfc2ltLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgQW5vZGVzID0gYygidG90Y2hvbF8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgInRvdGNob2xfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ0b3RjaG9sXzMiKSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgIExub2RlcyA9IGMoInNleCIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJlZHVjIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImFnZV8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNpZ3BkYXlfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJibWlfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaGRfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJoeXBlcnRlbl8xIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImFnZV8yIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNpZ3BkYXlfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJibWlfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaGRfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJoeXBlcnRlbl8yIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImFnZV8zIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgImNpZ3BkYXlfMyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJibWlfMyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaGRfMyIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJoeXBlcnRlbl8zIiksIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAjIENub2RlcyA9IGMoImNlbnNfMSIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICMgICAgICAgICAgImNlbnNfMiIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyAgICAgICAgImNlbnNfMyIpLA0KICAgICAgICAgICAgICAgICAgICAgICAgICBZbm9kZXMgPSBZbm9kZXMsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICBzdXJ2aXZhbE91dGNvbWUgPSBUUlVFLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgcmVnaW1lcyA9IHJlZ2ltZXMsDQogICAgICAgICAgICAgICAgICAgICAgICAgIHN1bW1hcnkubWVhc3VyZXMgPSBzdW1tYXJ5Lm1lYXN1cmVzLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgZmluYWwuWW5vZGVzID0gWW5vZGVzLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgd29ya2luZy5tc20gPSAiWSB+IHN1bV9jaG9sIiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgIGdjb21wID0gVFJVRSkNCg0KDQojIGRpc3BsYXkgcmVzdWx0cw0Kc3VtbWFyeShyZXN1bHRzX2lwdHdfdG1sZV9zaW0sICJ0bWxlIikNCnN1bW1hcnkocmVzdWx0c19pcHR3X3RtbGVfc2ltLCAiaXB0dyIpDQpzdW1tYXJ5KHJlc3VsdHNfZ2NvbXBfc2ltLCAiZ2NvbXAiKQ0KDQpgYGANCg0K</div>
 
 
 
