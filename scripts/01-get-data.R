@@ -57,7 +57,8 @@ frm[,`:=`(
 	chd = zoo::na.locf(chd, fromlast = T),
 	hyperten = zoo::na.locf(hyperten, fromlast = T),
 	totchol = zoo::na.locf(totchol, fromlast = T),
-	stroke = zoo::na.locf(stroke, fromlast = T)
+	stroke = {stroke[is.na(stroke)] <- 0
+	stroke}
 )]
 frm[,`:=`(
 	cens = {
