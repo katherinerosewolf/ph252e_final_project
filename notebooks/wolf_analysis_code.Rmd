@@ -48,19 +48,30 @@ nrow(frm.wide)
 sum(is.na(frm.wide))
 
 
+
+
 ```
 
 
 ```{r ltmle package . . . running targeted mle}
 
 # check no NAS
+frm_wide_working <- frm.wide
+
+# add columns for the sum of tol_chol at times 2 and 3
 
 # set n equal to number of rows
 n = nrow(frm.wide)
 
-# initialize regimes with dim n X num Anodes = 4 X num CF regimes = 16
+# initialize regimes with dim n X num Anodes = 3 X num CF regimes = 8
+regimes = array(dim=c(n,3,8))
+
+# initialize sumA
+sum_tolchol_2 = 
 
 
+
+ltmle(survivalOutcome = TRUE)
 
 
 ```
