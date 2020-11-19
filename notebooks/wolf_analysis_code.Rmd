@@ -47,13 +47,12 @@ nrow(frm.wide)
 # check if we have NAs
 sum(is.na(frm.wide))
 
-
-
-
 ```
 
 
 ```{r real data ltmle package}
+
+set.seed(252)
 
 # load imputed dataset
 load(file = here("data", 
@@ -359,7 +358,6 @@ results_gcomp_sim <- ltmleMSM(data = frm_for_ltmle_sim,
 summary(results_iptw_tmle_sim, "tmle")
 summary(results_iptw_tmle_sim, "iptw")
 summary(results_gcomp_sim, "gcomp")
-
 
 
 
