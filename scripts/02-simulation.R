@@ -237,12 +237,8 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 		)
 	}
 
-	setDT(frm.wide)
-
-	frm.wide[,`:=`(
-		sex = as.numeric(sex) + 1,
-		educ = as.numeric(educ)
-	)]
+		sex <- as.numeric(sex) + 1
+		educ <- as.numeric(educ)
 
 	return(as.data.table(sapply(names(obs), get, envir = .FunEnv)))
 }
