@@ -98,7 +98,6 @@ frm_for_ltmle <- frm_time_order %>%
                            stroke_3))
 
 # prevalent stroke?
-# cens variables?
 
 # set n equal to number of rows
 n = nrow(frm.wide)
@@ -184,6 +183,9 @@ results_gcomp <- ltmleMSM(data = frm_for_ltmle,
                                      "bmi_3", 
                                      "chd_3", 
                                      "hyperten_3"), 
+                          Cnodes = c("cens_1", 
+                                     "cens_2", 
+                                     "cens_3"),
                           Ynodes = Ynodes, 
                           survivalOutcome = TRUE, 
                           regimes = regimes,
