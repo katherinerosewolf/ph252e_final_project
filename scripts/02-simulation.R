@@ -240,9 +240,7 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 	setDT(frm.wide)
 
 	frm.wide[,`:=`(
-		sex_1 = as.numeric(sex_1) + 1,
-		sex_2 = as.numeric(sex_2) + 1,
-		sex_3 = as.numeric(sex_3) + 1,
+		sex = as.numeric(sex) + 1,
 		educ_1 = as.numeric(educ_1),
 		educ_2 = as.numeric(educ_2),
 		educ_3 = as.numeric(educ_3)
