@@ -58,7 +58,34 @@ sum(is.na(frm.wide))
 # check no NAS
 frm_wide_working <- frm.wide
 
-# add columns for the sum of tol_chol at times 2 and 3
+# reorder data
+frm_time_order <- frm.wide %>% 
+  select("sex", 
+         "educ", 
+         "age_1", 
+         "cigpday_1", 
+         "bmi_1", 
+         "chd_1", 
+         "hyperten_1", 
+         "tol_chol_1", 
+         "stroke_1", 
+         "age_2", 
+         "cigpday_2", 
+         "bmi_2", 
+         "chd_2", 
+         "hyperten_2", 
+         "tol_chol_2", 
+         "stroke_2", 
+         "age_3", 
+         "cigpday_3", 
+         "bmi_3", 
+         "chd_3", 
+         "hyperten_3", 
+         "tol_chol_3", 
+         "stroke_3")
+
+# prevalent stroke?
+# cens variables?
 
 # set n equal to number of rows
 n = nrow(frm.wide)
@@ -67,11 +94,58 @@ n = nrow(frm.wide)
 # dim n 
 # num Anodes = 3 (?)
 # num CF regimes = 8 (? 2 x 2 x 2)
-regimes = array(dim=c(n,3,8))
+regimes <- list(function(row) c(1,1,1), 
+                function(row) c(1,1,0), 
+                function(row) c(1,0,1), 
+                function(row) c(1,0,0), 
+                function(row) c(0,1,1), 
+                function(row) c(0,1,0), 
+                function(row) c(0,0,1), 
+                function(row) c(0,0,0))
 
-# define L nodes
+# make summary measures (number of regimes, number of Anodes, time)
+summary.measures <- array(dim = c(8, 1, 3))
 
-Lnodes <- c()
+dimnames(summary.measures)[[2]] <- c("sum_chol")
+
+summary.measures[, , 1] <- cbind(0:3, rep(1, 8))
+summary.measures[, , 2] <- cbind(0:3, rep(2, 8))
+summary.measures[, , 3] <- cbind(0:3, rep(3, 8))
+
+sums <- 
+
+  dimnames()
+
+results_first_try <- ltmle(data = frm_time_order, 
+                           Anodes = c("totchol_1", 
+                                      "totchol_2", 
+                                      "totchol_3"), 
+                           Lnodes = c("sex", 
+                                      "educ", 
+                                      "age_1", 
+                                      "cigpday_1", 
+                                      "bmi_1", 
+                                      "chd_1", 
+                                      "hyperten_1", 
+                                      "age_2", 
+                                      "cigpday_2", 
+                                      "bmi_2", 
+                                      "chd_2", 
+                                      "hyperten_2", 
+                                      "age_3", 
+                                      "cigpday_3", 
+                                      "bmi_3", 
+                                      "chd_3", 
+                                      "hyperten_3"), 
+                           Cnodes = NA, 
+                           Ynodes = c("stroke_1", 
+                                      "stroke_2", 
+                                      "stroke_3"), 
+                           survivalOutcome = TRUE)
+
+
+
+
 
 # # summary.measures
 # "Y ~ time + pmax(time - switch.time,
