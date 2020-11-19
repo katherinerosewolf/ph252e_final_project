@@ -32,7 +32,7 @@ names(frm)[grep("anychd", names(frm))] <- "chd"
 frm[,`:=`(endtime = shift(time, -1)), by = .(randid)]
 frm[is.na(endtime), endtime := 8766]
 frm[timestrk > endtime, stroke := 0]
-frm[timestrk > endtime, stroke := 1]
+frm[timestrk <= endtime, stroke := 1]
 frm[timeap > endtime | stroke == 1, cens := 0]
 frm[timeap <= endtime & timeap < 8766, cens := 1]
 frm[timechd > endtime, anychd := 0]
