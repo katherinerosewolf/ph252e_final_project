@@ -67,7 +67,7 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 					paste0("time", "_", k - 1),
 					paste0("age", "_", k - 1),
 					paste0(c("chd", "hyperten", "cens"), "_", k - 1),
-					paste0("totchol_", (k -1):1))
+					paste0("totchol_", (k - 1):1))
 			})
 	})
 
@@ -78,8 +78,8 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 			if (k > 1) {
 				c(paste0("stroke_", k - 1),
 					paste0(c("chd", "hyperten"), "_", k),
-					paste0("cens_", (k -1)),
-					paste0("totchol_", (k -1):1))
+					paste0("totchol_", (k - 1))
+					)
 			})
 	})
 
@@ -202,13 +202,16 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 					 envir = .FunEnv
 		)
 		assign(paste0("cens_", k),
-					 as.numeric(
+					 cens <- as.numeric(
 					 	get(paste0("U_cens_", k), envir = .FunEnv) <
 					 		predict(
 					 			get(paste0("mod_cens_", k), envir = .FunEnv),
 					 			newdata = as.data.frame(sapply(C.pred[[k]], get, envir = .FunEnv, simplify = F)))),
 					 envir = .FunEnv
 		)
+		if (k > 1 & sum(sapply(1:k, function(k) {get(paste0("cens_", k), envir = .FunEnv)})) > 0 ) {
+			assign(paste0("cens_", k), 1, envir = .FunEnv )
+		}
 		assign(paste0("totchol_", k),
 					 as.numeric(
 					 	get(paste0("U_totchol_", k), envir = .FunEnv) <

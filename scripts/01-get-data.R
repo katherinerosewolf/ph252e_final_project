@@ -34,21 +34,20 @@ frm[is.na(endtime), endtime := 8766]
 frm[timestrk > endtime, stroke := 0]
 frm[timestrk > endtime, stroke := 1]
 frm[timeap > endtime | stroke == 1, cens := 0]
-frm[timeap <= endtime, cens := 1]
+frm[timeap <= endtime & timeap < 8766, cens := 1]
 frm[timechd > endtime, anychd := 0]
 frm[timehyp > endtime, hyperten := 0]
 
 # Impute where NA
 frm[,`:=`(
-	sex = zoo::na.locf(sex),
-	educ = zoo::na.locf(educ),
-	cigpday = zoo::na.locf(cigpday),
-	bmi = zoo::na.locf(bmi),
-	chd = zoo::na.locf(chd),
-	hyperten = zoo::na.locf(hyperten),
-	cens = zoo::na.locf(cens),
-	totchol = zoo::na.locf(totchol),
-	stroke = zoo::na.locf(stroke)
+	sex = zoo::na.locf(sex, na.rm = F),
+	educ = zoo::na.locf(educ, na.rm = F),
+	cigpday = zoo::na.locf(cigpday, na.rm = F),
+	bmi = zoo::na.locf(bmi, na.rm = F),
+	chd = zoo::na.locf(chd, na.rm = F),
+	hyperten = zoo::na.locf(hyperten, na.rm = F),
+	totchol = zoo::na.locf(totchol, na.rm = F),
+	stroke = zoo::na.locf(stroke, na.rm = F)
 )]
 frm[,`:=`(
 	sex = zoo::na.locf(sex, fromlast = T),
@@ -57,10 +56,18 @@ frm[,`:=`(
 	bmi = zoo::na.locf(bmi, fromlast = T),
 	chd = zoo::na.locf(chd, fromlast = T),
 	hyperten = zoo::na.locf(hyperten, fromlast = T),
-	cens = zoo::na.locf(cens, fromlast = T),
 	totchol = zoo::na.locf(totchol, fromlast = T),
 	stroke = zoo::na.locf(stroke, fromlast = T)
 )]
+frm[,`:=`(
+	cens = {
+		tmp <- 0
+		tmp[!is.na(cens)] <- cens[!is.na(cens)]
+		tmp <- zoo::na.locf(tmp, na.rm = F)
+		is.na(tmp) <- 0
+		tmp
+	}
+), by = .(randid)]
 frm[,`:=`(
 	time = {
 		time[is.na(time) & period == 2] <- time[period == 1]  + 2200
