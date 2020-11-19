@@ -97,8 +97,6 @@ frm_for_ltmle <- frm_time_order %>%
                            1, 
                            stroke_3))
 
-# prevalent stroke?
-
 # set n equal to number of rows
 n = nrow(frm.wide)
 
@@ -194,13 +192,13 @@ results_gcomp <- ltmleMSM(data = frm_for_ltmle,
                           working.msm = "Y ~ sum_chol", 
                           gcomp = TRUE)
 
-
 # display results
 summary(results_iptw_tmle, "tmle")
 summary(results_iptw_tmle, "iptw")
 summary(results_gcomp, "gcomp")
 
 ```
+
 
 ```{r simulated data ltmle package}
 
