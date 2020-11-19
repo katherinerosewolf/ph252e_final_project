@@ -247,6 +247,7 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 	return(as.data.table(sapply(names(obs), get, envir = .FunEnv)))
 }
 
+set.seed(252)
 frm.sim <- generate_data()
 
 # Simulated versus observed...
