@@ -1752,105 +1752,68 @@ summary {
 <p>Katie’s ltmle code</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGxvYWQgbGlicmFyaWVzXG5saWJyYXJ5KHRpZHl2ZXJzZSlcbmxpYnJhcnkoaGVyZSlcbmxpYnJhcnkocGFuZGVyKVxubGlicmFyeSh0aWt6RGV2aWNlKVxuXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGxvYWQgbGlicmFyaWVzXG5saWJyYXJ5KHRpZHl2ZXJzZSlcbmxpYnJhcnkoaGVyZSlcbmxpYnJhcnkocGFuZGVyKVxubGlicmFyeSh0aWt6RGV2aWNlKVxubGlicmFyeShsdG1sZSlcblxuYGBgIn0= -->
 <pre class="r"><code>
 # load libraries
 library(tidyverse)
 library(here)
 library(pander)
 library(tikzDevice)
+library(ltmle)
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5oZXJlKClcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5oZXJlKClcblxuIyBydW4gQ2hlbidzIHNjcmlwdCB0byBtYWtlIHRoZSBpbXB1dGVkIGRhdGFzZXRcbnNvdXJjZShoZXJlOjpoZXJlKFwic2NyaXB0c1wiLCBcbiAgICAgICAgICAgICAgICAgIFwiMDEtZ2V0LWRhdGEuUlwiKSlcblxuIyBzYXZlIGZpbGUgdG8gZGlza1xuc2F2ZShmcm0ud2lkZSwgXG4gICAgIGZpbGUgPSBoZXJlKFwiZGF0YVwiLCBcbiAgICAgICAgICAgICAgICAgXCJmcm1fd2lkZS5yZGF0YVwiKSlcblxuYGBgIn0= -->
 <pre class="r"><code>
-here()</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQzovVXNlcnMvS2F0aGVyaW5lIFJvc2UgV29sZi9iZXJrZWxleV9kcml2ZS9hbmFseXNlcy9waDI1MmVfZmluYWxfcHJvamVjdFwiXG4ifQ== -->
-<pre><code>[1] &quot;C:/Users/Katherine Rose Wolf/berkeley_drive/analyses/ph252e_final_project&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBydW4gQ2hlbidzIHNjcmlwdCB0byBtYWtlIHRoZSBpbXB1dGVkIGRhdGFzZXRcbnNvdXJjZShoZXJlOjpoZXJlKFwic2NyaXB0c1wiLCBcbiAgICAgICAgICAgICAgICAgIFwiMDEtZ2V0LWRhdGEuUlwiKSlcbmBgYCJ9 -->
-<pre class="r"><code># run Chen&#39;s script to make the imputed dataset
+here()
+
+# run Chen&#39;s script to make the imputed dataset
 source(here::here(&quot;scripts&quot;, 
-                  &quot;01-get-data.R&quot;))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2Qgb3ZlcndyaXR0ZW4gYnkgJ2RhdGEudGFibGUnOlxuICBtZXRob2QgICAgICAgICAgIGZyb21cbiAgcHJpbnQuZGF0YS50YWJsZSAgICAgXG5kYXRhLnRhYmxlIDEuMTMuMCB1c2luZyA0IHRocmVhZHMgKHNlZSA/Z2V0RFR0aHJlYWRzKS4gIExhdGVzdCBuZXdzOiByLWRhdGF0YWJsZS5jb21cblxuQXR0YWNoaW5nIHBhY2thZ2U6IOOkvOO4sWRhdGEudGFibGXjpLzjuLJcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDjpLzjuLFwYWNrYWdlOmRwbHly46S847iyOlxuXG4gICAgYmV0d2VlbiwgZmlyc3QsIGxhc3RcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g46S847ixcGFja2FnZTpwdXJycuOkvOO4sjpcblxuICAgIHRyYW5zcG9zZVxuIn0= -->
-<pre><code>Registered S3 method overwritten by &#39;data.table&#39;:
-  method           from
-  print.data.table     
-data.table 1.13.0 using 4 threads (see ?getDTthreads).  Latest news: r-datatable.com
+                  &quot;01-get-data.R&quot;))
 
-Attaching package: 㤼㸱data.table㤼㸲
-
-The following objects are masked from 㤼㸱package:dplyr㤼㸲:
-
-    between, first, last
-
-The following object is masked from 㤼㸱package:purrr㤼㸲:
-
-    transpose</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ2xhc3NlcyDigJhkYXRhLnRhYmxl4oCZIGFuZCAnZGF0YS5mcmFtZSc6XHQxMzMwMiBvYnMuIG9mICAzOSB2YXJpYWJsZXM6XG4gJCByYW5kaWQgIDogaW50ICAyNDQ4IDI0NDggMjQ0OCA2MjM4IDYyMzggNjIzOCA5NDI4IDk0MjggOTQyOCAxMDU1MiAuLi5cbiAkIHBlcmlvZCAgOiBpbnQgIDEgMiAzIDEgMiAzIDEgMiAzIDEgLi4uXG4gJCBzZXggICAgIDogaW50ICAxIE5BIDEgMiAyIDIgMSAxIE5BIDIgLi4uXG4gJCB0b3RjaG9sIDogaW50ICAxOTUgTkEgMjA5IDI1MCAyNjAgMjM3IDI0NSAyODMgTkEgMjI1IC4uLlxuICQgYWdlICAgICA6IGludCAgMzkgTkEgNTIgNDYgNTIgNTggNDggNTQgTkEgNjEgLi4uXG4gJCBzeXNicCAgIDogbnVtICAxMDYgTkEgMTIxIDEyMSAxMDUgLi4uXG4gJCBkaWFicCAgIDogbnVtICA3MCBOQSA2NiA4MSA2OS41IDY2IDgwIDg5IE5BIDk1IC4uLlxuICQgY3Vyc21va2U6IGludCAgMCBOQSAwIDAgMCAwIDEgMSBOQSAxIC4uLlxuICQgY2lncGRheSA6IGludCAgMCBOQSAwIDAgMCAwIDIwIDMwIE5BIDMwIC4uLlxuICQgYm1pICAgICA6IG51bSAgMjcgTkEgTkEgMjguNyAyOS40IC4uLlxuICQgZGlhYmV0ZXM6IGludCAgMCBOQSAwIDAgMCAwIDAgMCBOQSAwIC4uLlxuICQgYnBtZWRzICA6IGludCAgMCBOQSAwIDAgMCAwIDAgMCBOQSAwIC4uLlxuICQgaGVhcnRydGU6IGludCAgODAgTkEgNjkgOTUgODAgODAgNzUgNzUgTkEgNjUgLi4uXG4gJCBnbHVjb3NlIDogaW50ICA3NyBOQSA5MiA3NiA4NiA3MSA3MCA4NyBOQSAxMDMgLi4uXG4gJCBlZHVjICAgIDogaW50ICA0IE5BIDQgMiAyIDIgMSAxIE5BIDMgLi4uXG4gJCBwcmV2Y2hkIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBwcmV2YXAgIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBwcmV2bWkgIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBwcmV2c3RyazogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBwcmV2aHlwIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDEgLi4uXG4gJCB0aW1lICAgIDogaW50ICAwIE5BIDQ2MjggMCAyMTU2IDQzNDQgMCAyMTk5IE5BIDAgLi4uXG4gJCBoZGxjICAgIDogaW50ICBOQSBOQSAzMSBOQSBOQSA1NCBOQSBOQSBOQSBOQSAuLi5cbiAkIGxkbGMgICAgOiBpbnQgIE5BIE5BIDE3OCBOQSBOQSAxNDEgTkEgTkEgTkEgTkEgLi4uXG4gJCBkZWF0aCAgIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDEgLi4uXG4gJCBhbmdpbmEgIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBob3NwbWkgIDogaW50ICAxIE5BIDEgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBtaV9mY2hkIDogaW50ICAxIE5BIDEgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBhbnljaGQgIDogaW50ICAxIE5BIDEgMCAwIDAgMCAwIE5BIDAgLi4uXG4gJCBzdHJva2UgIDogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDEgLi4uXG4gJCBjdmQgICAgIDogaW50ICAxIE5BIDEgMCAwIDAgMCAwIE5BIDEgLi4uXG4gJCBoeXBlcnRlbjogaW50ICAwIE5BIDAgMCAwIDAgMCAwIE5BIDEgLi4uXG4gJCB0aW1lYXAgIDogaW50ICA4NzY2IE5BIDg3NjYgODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDI5NTYgLi4uXG4gJCB0aW1lbWkgIDogaW50ICA2NDM4IE5BIDY0MzggODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDI5NTYgLi4uXG4gJCB0aW1lbWlmYzogaW50ICA2NDM4IE5BIDY0MzggODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDI5NTYgLi4uXG4gJCB0aW1lY2hkIDogaW50ICA2NDM4IE5BIDY0MzggODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDI5NTYgLi4uXG4gJCB0aW1lc3RyazogaW50ICA4NzY2IE5BIDg3NjYgODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDIwODkgLi4uXG4gJCB0aW1lY3ZkIDogaW50ICA2NDM4IE5BIDY0MzggODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDIwODkgLi4uXG4gJCB0aW1lZHRoIDogaW50ICA4NzY2IE5BIDg3NjYgODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDI5NTYgLi4uXG4gJCB0aW1laHlwIDogaW50ICA4NzY2IE5BIDg3NjYgODc2NiA4NzY2IDg3NjYgODc2NiA4NzY2IE5BIDAgLi4uXG4gLSBhdHRyKCosIFwiLmludGVybmFsLnNlbGZyZWZcIik9PGV4dGVybmFscHRyPiBcbiAtIGF0dHIoKiwgXCJzb3J0ZWRcIik9IGNociBbMToyXSBcInJhbmRpZFwiIFwicGVyaW9kXCJcbiJ9 -->
-<pre><code>Classes ‘data.table’ and &#39;data.frame&#39;:  13302 obs. of  39 variables:
- $ randid  : int  2448 2448 2448 6238 6238 6238 9428 9428 9428 10552 ...
- $ period  : int  1 2 3 1 2 3 1 2 3 1 ...
- $ sex     : int  1 NA 1 2 2 2 1 1 NA 2 ...
- $ totchol : int  195 NA 209 250 260 237 245 283 NA 225 ...
- $ age     : int  39 NA 52 46 52 58 48 54 NA 61 ...
- $ sysbp   : num  106 NA 121 121 105 ...
- $ diabp   : num  70 NA 66 81 69.5 66 80 89 NA 95 ...
- $ cursmoke: int  0 NA 0 0 0 0 1 1 NA 1 ...
- $ cigpday : int  0 NA 0 0 0 0 20 30 NA 30 ...
- $ bmi     : num  27 NA NA 28.7 29.4 ...
- $ diabetes: int  0 NA 0 0 0 0 0 0 NA 0 ...
- $ bpmeds  : int  0 NA 0 0 0 0 0 0 NA 0 ...
- $ heartrte: int  80 NA 69 95 80 80 75 75 NA 65 ...
- $ glucose : int  77 NA 92 76 86 71 70 87 NA 103 ...
- $ educ    : int  4 NA 4 2 2 2 1 1 NA 3 ...
- $ prevchd : int  0 NA 0 0 0 0 0 0 NA 0 ...
- $ prevap  : int  0 NA 0 0 0 0 0 0 NA 0 ...
- $ prevmi  : int  0 NA 0 0 0 0 0 0 NA 0 ...
- $ prevstrk: int  0 NA 0 0 0 0 0 0 NA 0 ...
- $ prevhyp : int  0 NA 0 0 0 0 0 0 NA 1 ...
- $ time    : int  0 NA 4628 0 2156 4344 0 2199 NA 0 ...
- $ hdlc    : int  NA NA 31 NA NA 54 NA NA NA NA ...
- $ ldlc    : int  NA NA 178 NA NA 141 NA NA NA NA ...
- $ death   : int  0 NA 0 0 0 0 0 0 NA 1 ...
- $ angina  : int  0 NA 0 0 0 0 0 0 NA 0 ...
- $ hospmi  : int  1 NA 1 0 0 0 0 0 NA 0 ...
- $ mi_fchd : int  1 NA 1 0 0 0 0 0 NA 0 ...
- $ anychd  : int  1 NA 1 0 0 0 0 0 NA 0 ...
- $ stroke  : int  0 NA 0 0 0 0 0 0 NA 1 ...
- $ cvd     : int  1 NA 1 0 0 0 0 0 NA 1 ...
- $ hyperten: int  0 NA 0 0 0 0 0 0 NA 1 ...
- $ timeap  : int  8766 NA 8766 8766 8766 8766 8766 8766 NA 2956 ...
- $ timemi  : int  6438 NA 6438 8766 8766 8766 8766 8766 NA 2956 ...
- $ timemifc: int  6438 NA 6438 8766 8766 8766 8766 8766 NA 2956 ...
- $ timechd : int  6438 NA 6438 8766 8766 8766 8766 8766 NA 2956 ...
- $ timestrk: int  8766 NA 8766 8766 8766 8766 8766 8766 NA 2089 ...
- $ timecvd : int  6438 NA 6438 8766 8766 8766 8766 8766 NA 2089 ...
- $ timedth : int  8766 NA 8766 8766 8766 8766 8766 8766 NA 2956 ...
- $ timehyp : int  8766 NA 8766 8766 8766 8766 8766 8766 NA 0 ...
- - attr(*, &quot;.internal.selfref&quot;)=&lt;externalptr&gt; 
- - attr(*, &quot;sorted&quot;)= chr [1:2] &quot;randid&quot; &quot;period&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBzYXZlIGZpbGUgdG8gZGlza1xuc2F2ZShmcm0ud2lkZSwgXG4gICAgIGZpbGUgPSBmaWxlLnBhdGgoXCJkYXRhXCIsIFxuICAgICAgICAgICAgICAgICAgICAgIFwiZnJtX3dpZGUucmRhdGFcIikpXG5gYGAifQ== -->
-<pre class="r"><code># save file to disk
+# save file to disk
 save(frm.wide, 
-     file = file.path(&quot;data&quot;, 
-                      &quot;frm_wide.rdata&quot;))</code></pre>
+     file = here(&quot;data&quot;, 
+                 &quot;frm_wide.rdata&quot;))
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiY2Fubm90IG9wZW4gY29tcHJlc3NlZCBmaWxlICdkYXRhL2ZybV93aWRlLnJkYXRhJywgcHJvYmFibGUgcmVhc29uICdObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5J0Vycm9yIGluIGd6ZmlsZShmaWxlLCBcIndiXCIpIDogY2Fubm90IG9wZW4gdGhlIGNvbm5lY3Rpb25cbiJ9 -->
-<pre><code>cannot open compressed file &#39;data/frm_wide.rdata&#39;, probable reason &#39;No such file or directory&#39;Error in gzfile(file, &quot;wb&quot;) : cannot open the connection</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGxvYWQgaW1wdXRlZCBkYXRhc2V0XG5sb2FkKGZpbGUgPSBoZXJlKFwiZGF0YVwiLCBcbiAgICAgICAgICAgICAgICAgXCJmcm1fd2lkZS5yZGF0YVwiKSlcblxuIyBjaGVjayBudW1iZXIgb2Ygcm93c1xubnJvdyhmcm0ud2lkZSlcblxuIyBjaGVjayBpZiB3ZSBoYXZlIE5Bc1xuc3VtKGlzLm5hKGZybS53aWRlKSlcblxuXG5gYGAifQ== -->
+<pre class="r"><code>
+# load imputed dataset
+load(file = here(&quot;data&quot;, 
+                 &quot;frm_wide.rdata&quot;))
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCmVkaXRvcl9vcHRpb25zOiANCiAgY2h1bmtfb3V0cHV0X3R5cGU6IGlubGluZQ0KLS0tDQoNCkthdGllJ3MgbHRtbGUgY29kZQ0KDQpgYGB7cn0NCg0KIyBsb2FkIGxpYnJhcmllcw0KbGlicmFyeSh0aWR5dmVyc2UpDQpsaWJyYXJ5KGhlcmUpDQpsaWJyYXJ5KHBhbmRlcikNCmxpYnJhcnkodGlrekRldmljZSkNCg0KYGBgDQoNCg0KDQpgYGB7ciBjaGVuIGNvZGV9DQoNCmhlcmUoKQ0KDQojIHJ1biBDaGVuJ3Mgc2NyaXB0IHRvIG1ha2UgdGhlIGltcHV0ZWQgZGF0YXNldA0Kc291cmNlKGhlcmU6OmhlcmUoInNjcmlwdHMiLCANCiAgICAgICAgICAgICAgICAgICIwMS1nZXQtZGF0YS5SIikpDQoNCiMgc2F2ZSBmaWxlIHRvIGRpc2sNCnNhdmUoZnJtLndpZGUsIA0KICAgICBoZXJlKCJkYXRhIiwgDQogICAgICAgICAgImZybV93aWRlLnJkYXRhIikpDQoNCg0KDQpgYGANCg0K</div>
+# check number of rows
+nrow(frm.wide)
+
+# check if we have NAs
+sum(is.na(frm.wide))
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGNoZWNrIG5vIE5BU1xuXG4jIHNldCBuIGVxdWFsIHRvIG51bWJlciBvZiByb3dzXG5uID0gbnJvdyhmcm0ud2lkZSlcblxuIyBpbml0aWFsaXplIHJlZ2ltZXMgd2l0aCBkaW0gbiBYIG51bSBBbm9kZXMgPSA0IFggbnVtIENGIHJlZ2ltZXMgPSAxNlxuXG5cblxuXG5gYGAifQ== -->
+<pre class="r"><code>
+# check no NAS
+
+# set n equal to number of rows
+n = nrow(frm.wide)
+
+# initialize regimes with dim n X num Anodes = 4 X num CF regimes = 16
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCmVkaXRvcl9vcHRpb25zOiANCiAgY2h1bmtfb3V0cHV0X3R5cGU6IGlubGluZQ0KLS0tDQoNCkthdGllJ3MgbHRtbGUgY29kZQ0KDQpgYGB7cn0NCg0KIyBsb2FkIGxpYnJhcmllcw0KbGlicmFyeSh0aWR5dmVyc2UpDQpsaWJyYXJ5KGhlcmUpDQpsaWJyYXJ5KHBhbmRlcikNCmxpYnJhcnkodGlrekRldmljZSkNCmxpYnJhcnkobHRtbGUpDQoNCmBgYA0KDQoNCmBgYHtyIGNoZW4gY29kZX0NCg0KaGVyZSgpDQoNCiMgcnVuIENoZW4ncyBzY3JpcHQgdG8gbWFrZSB0aGUgaW1wdXRlZCBkYXRhc2V0DQpzb3VyY2UoaGVyZTo6aGVyZSgic2NyaXB0cyIsIA0KICAgICAgICAgICAgICAgICAgIjAxLWdldC1kYXRhLlIiKSkNCg0KIyBzYXZlIGZpbGUgdG8gZGlzaw0Kc2F2ZShmcm0ud2lkZSwgDQogICAgIGZpbGUgPSBoZXJlKCJkYXRhIiwgDQogICAgICAgICAgICAgICAgICJmcm1fd2lkZS5yZGF0YSIpKQ0KDQpgYGANCg0KDQpgYGB7ciBsb29raW5nIGF0IHRoZSBkYXRhfQ0KDQojIGxvYWQgaW1wdXRlZCBkYXRhc2V0DQpsb2FkKGZpbGUgPSBoZXJlKCJkYXRhIiwgDQogICAgICAgICAgICAgICAgICJmcm1fd2lkZS5yZGF0YSIpKQ0KDQojIGNoZWNrIG51bWJlciBvZiByb3dzDQpucm93KGZybS53aWRlKQ0KDQojIGNoZWNrIGlmIHdlIGhhdmUgTkFzDQpzdW0oaXMubmEoZnJtLndpZGUpKQ0KDQoNCmBgYA0KDQoNCmBgYHtyIGx0bWxlIHBhY2thZ2UgLiAuIC4gcnVubmluZyB0YXJnZXRlZCBtbGV9DQoNCiMgY2hlY2sgbm8gTkFTDQoNCiMgc2V0IG4gZXF1YWwgdG8gbnVtYmVyIG9mIHJvd3MNCm4gPSBucm93KGZybS53aWRlKQ0KDQojIGluaXRpYWxpemUgcmVnaW1lcyB3aXRoIGRpbSBuIFggbnVtIEFub2RlcyA9IDQgWCBudW0gQ0YgcmVnaW1lcyA9IDE2DQoNCg0KDQoNCmBgYA0K</div>
 
 
 

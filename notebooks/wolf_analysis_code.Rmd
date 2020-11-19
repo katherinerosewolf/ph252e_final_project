@@ -14,9 +14,9 @@ library(tidyverse)
 library(here)
 library(pander)
 library(tikzDevice)
+library(ltmle)
 
 ```
-
 
 
 ```{r chen code}
@@ -29,10 +29,38 @@ source(here::here("scripts",
 
 # save file to disk
 save(frm.wide, 
-     here("data", 
-          "frm_wide.rdata"))
+     file = here("data", 
+                 "frm_wide.rdata"))
 
+```
+
+
+```{r looking at the data}
+
+# load imputed dataset
+load(file = here("data", 
+                 "frm_wide.rdata"))
+
+# check number of rows
+nrow(frm.wide)
+
+# check if we have NAs
+sum(is.na(frm.wide))
 
 
 ```
 
+
+```{r ltmle package . . . running targeted mle}
+
+# check no NAS
+
+# set n equal to number of rows
+n = nrow(frm.wide)
+
+# initialize regimes with dim n X num Anodes = 4 X num CF regimes = 16
+
+
+
+
+```
