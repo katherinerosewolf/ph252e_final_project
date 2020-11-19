@@ -72,7 +72,7 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 	})
 
 	C.pred <- lapply(1:3, function(k) {
-		c(paste0("time", "_", k),
+		c(# paste0("time", "_", k),
 			paste0("age", "_", k),
 			"educ", "sex",
 			if (k > 1) {
@@ -85,7 +85,7 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 	})
 
 	A.pred <- lapply(1:3, function(k) {
-		c(paste0("time", "_", k),
+		c(# paste0("time", "_", k),
 			paste0("age", "_", k),
 			"educ", "sex",
 			if (k > 1) {
@@ -96,7 +96,7 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 	})
 
 	Y.pred <- lapply(1:3, function(k) {
-		c(paste0("time", "_", k),
+		c(# paste0("time", "_", k),
 			paste0("age", "_", k),
 			"educ", "sex",
 			if (k > 1) {
@@ -237,7 +237,7 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 		)
 	}
 
-		sex <- as.numeric(sex) + 1
+		sex <- as.numeric(sex)
 		educ <- as.numeric(educ)
 
 	return(as.data.table(sapply(names(obs), get, envir = .FunEnv)))
