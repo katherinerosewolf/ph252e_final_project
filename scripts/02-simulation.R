@@ -32,7 +32,8 @@ frm %>% ggplot(
 
 n <- nrow(frm.wide)
 
-generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
+generate_data <- function(n = nrow(frm.wide), obs = frm.wide,
+													intervention_A = NULL, intervention_C = NULL) {
 	educ.levels <- c("Less than 12 years", "High school diploma, GED", "Some college, vocational school", "College or")
 	obs$educ <- factor(obs$educ, labels = educ.levels)
 	obs$sex <- factor(obs$sex, labels = c("M", "W"))
@@ -177,12 +178,14 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 		# k <- 1
 		sapply(c("chd", "hyperten"), function(x) {
 			assign(paste0(x, "_", k),
-						 as.numeric(
+						 {if (is.null(intervention_A)) {as.numeric(
 						 	get(paste0("U_", x, "_", k), envir = .FunEnv) <
 						 		predict(
 						 			get(paste0("mod_", x, "_", k), envir = .FunEnv),
 						 			newdata = as.data.frame(sapply(L.pred[[k]], get, envir = .FunEnv, simplify = F)),
-						 			type = "response")),
+						 			type = "response"))} else {
+						 				intervention_A
+						 			}},
 						 envir = .FunEnv
 			)}
 		)
@@ -213,6 +216,9 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide) {
 						 			type = "response"))
 		if (k > 1) {
 			cens[get(paste0("cens_", k - 1), envir = .FunEnv) == 1] <- 1
+		}
+		if (!is.null(intervention_C)) {
+			cens <- intervention_C
 		}
 		assign(paste0("cens_", k),# 0,
 					 cens,
