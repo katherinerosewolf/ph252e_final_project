@@ -74,7 +74,7 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide,
 
 	C.pred <- lapply(1:3, function(k) {
 		c(# paste0("time", "_", k),
-			paste0("age", "_", k),
+				paste0("age", "_", k),
 			"educ", "sex",
 			if (k > 1) {
 				c(paste0("stroke_", k - 1),
