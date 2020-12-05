@@ -34,6 +34,9 @@ n <- nrow(frm.wide)
 
 generate_data <- function(n = nrow(frm.wide), obs = frm.wide,
 													intervention_A = NULL, intervention_C = NULL) {
+	if (length(intervention_A) == 1) {intervention_A <- rep(intervention_A, n)}
+	if (length(intervention_C) == 1) {intervention_A <- rep(intervention_C, n)}
+
 	educ.levels <- c("Less than 12 years", "High school diploma, GED", "Some college, vocational school", "College or")
 	obs$educ <- factor(obs$educ, labels = educ.levels)
 	obs$sex <- factor(obs$sex, labels = c("M", "W"))
@@ -252,6 +255,11 @@ generate_data <- function(n = nrow(frm.wide), obs = frm.wide,
 
 set.seed(252)
 frm.sim <- generate_data()
+# # Post-intervention data
+# Psi <- sapply(1:500, function(i) {
+# 	mean(generate_data(intervention_A = 0, intervention_C = 0)$stroke_3)
+# 	})
+# saveRDS(Psi, here::here("resources", "psi_simulation.rds"))
 
 # Simulated versus observed...
 cbind(frm[order(period, bmi),.(bmi, period = paste0("bmi_", period))],
