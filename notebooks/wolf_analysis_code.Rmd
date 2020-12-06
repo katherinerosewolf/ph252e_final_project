@@ -454,9 +454,35 @@ get.bs <- function(B = 500) {
   }))}
 
 # frm.bs <- get.bs(1e3)
-# saveRDS(frm.bs, file = here::here("resources", "boostrap_distribution.RDS"))
-
-frm.bs <- readRDS(file = here::here("resources", "boostrap_distribution.RDS"))
+# saveRDS(frm.bs, file = here::here("resources", "bootstrap_distribution.rds"))
 
 ```
 
+```{r performance}
+frm.bs <- readRDS(file = here::here("resources", "bootstrap_distribution.rds"))
+
+# tikz(here::here('resources', "bootstrap.tex"), standAlone = T, width = 5, height = 3)
+# rbindlist(lapply(c("TMLE", "IPTW", "G-comp"), function(x) {
+#   tmp <- frm.bs[,x, with = F]
+#   names(tmp) <- "Estimate"
+#   tmp}), idcol = T)[,.(
+#     Estimate, Method = factor(.id, labels = c("TMLE", "IPTW", "G-comp"))
+#   )] %>% ggplot(aes(x = Estimate, fill = Method)) +
+#   labs(y = "Density") +
+#   # geom_vline(xintercept = 0.39601) +
+#   geom_density(alpha = 0.5, color = NA) +
+#   theme_bw()
+# 
+# perf.tab <- sapply(frm.bs[,-'b'], function(x) {
+#   return(c(
+#     Bias = mean(x - 0.39601),
+#     Variance = var(x),
+#     MSE = mean(x - 0.39601)^2 + var(x)
+#   ))
+# })
+# dev.off()
+# lualatex("bootstrap\\.tex", here::here('resources'))
+
+perf.tab %>% apply(2, function(x) {signif(x, 4)}) %>%
+  xtable(auto = T) %>% print(include.rownames = T)
+```
