@@ -12,8 +12,8 @@ frm <- as.data.table(frm)
 names(frm) <- tolower(names(frm))
 frm <- merge(frm, frm[,.(period = 1:3), by = .(randid)], on = "randid", all = T)
 
-str(frm)
-length(unique(frm$randid))
+# str(frm)
+# length(unique(frm$randid))
 
 # Does education vary over time?
 lapply(c("educ", "cigpday", "bmi", "sex"), function(x) {
