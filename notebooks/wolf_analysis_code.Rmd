@@ -198,6 +198,99 @@ summary(results_gcomp, "gcomp")
 
 ```
 
+```{r bootstrap-real, warning=F, message=F, eval = F}
+get.bs <- function(B = 500, obs = frm_for_ltmle, n = nrow(frm_for_ltmle)) {
+  rbindlist(lapply(1:B, function(b) {
+    
+    obs <- obs[sample(1:n, n, replace = T),]
+    
+    results_iptw_tmle <- ltmleMSM(data = obs, 
+                                  Anodes = c("totchol_1", 
+                                             "totchol_2", 
+                                             "totchol_3"), 
+                                  Lnodes = c("sex", 
+                                             "educ", 
+                                             "age_1", 
+                                             "cigpday_1", 
+                                             "bmi_1", 
+                                             "chd_1", 
+                                             "hyperten_1", 
+                                             "age_2", 
+                                             "cigpday_2", 
+                                             "bmi_2", 
+                                             "chd_2", 
+                                             "hyperten_2", 
+                                             "age_3", 
+                                             "cigpday_3", 
+                                             "bmi_3", 
+                                             "chd_3", 
+                                             "hyperten_3"), 
+                                  Cnodes = c("cens_1", 
+                                             "cens_2", 
+                                             "cens_3"),
+                                  Ynodes = Ynodes, 
+                                  survivalOutcome = TRUE, 
+                                  regimes = regimes,
+                                  summary.measures = summary.measures, 
+                                  final.Ynodes = Ynodes, 
+                                  working.msm = "Y ~ sum_chol")
+    
+    # get the gcomputation version
+    results_gcomp <- ltmleMSM(data = obs, 
+                              Anodes = c("totchol_1", 
+                                         "totchol_2", 
+                                         "totchol_3"), 
+                              Lnodes = c("sex", 
+                                         "educ", 
+                                         "age_1", 
+                                         "cigpday_1", 
+                                         "bmi_1", 
+                                         "chd_1", 
+                                         "hyperten_1", 
+                                         "age_2", 
+                                         "cigpday_2", 
+                                         "bmi_2", 
+                                         "chd_2", 
+                                         "hyperten_2", 
+                                         "age_3", 
+                                         "cigpday_3", 
+                                         "bmi_3", 
+                                         "chd_3", 
+                                         "hyperten_3"), 
+                              Cnodes = c("cens_1", 
+                                         "cens_2", 
+                                         "cens_3"),
+                              Ynodes = Ynodes, 
+                              survivalOutcome = TRUE, 
+                              regimes = regimes,
+                              summary.measures = summary.measures, 
+                              final.Ynodes = Ynodes, 
+                              working.msm = "Y ~ sum_chol", 
+                              gcomp = TRUE)
+    
+    # display results
+    return(data.table(
+      "TMLE" = summary(results_iptw_tmle, "tmle")$cmat[2, 1],
+      "IPTW" = summary(results_iptw_tmle, "iptw")$cmat[2, 1],
+      "G-comp" = summary(results_gcomp, "gcomp")$cmat[2, 1],
+      b = b
+    ))
+  }))}
+
+frm.bs <- get.bs(1e3)
+saveRDS(frm.bs, file = here::here("resources", "bootstrap_distribution.rds"))
+```
+
+```{r bootstra-variance}
+frm.bs <- readRDS(file = here::here("resources", "bootstrap_distribution.rds"))
+sapply(frm.bs[,-'b'], function(x) {
+  return(c(
+    Estimate = mean(x),
+    CI.upper = mean(x) + sd(x) * qnorm(0.975),
+    CI.lower = mean(x) - sd(x) * qnorm(0.975)
+  ))
+})
+```
 
 ```{r simulated data ltmle package, warning=F, message=F}
 
@@ -325,7 +418,7 @@ summary(results_iptw_tmle, "iptw")
 summary(results_gcomp, "gcomp")
 ```
 
-```{r bootstrap, warning=F, message=F}
+```{r simulation-performance, warning=F, message=F, eval=F}
 
 set.seed(252)
 
@@ -333,7 +426,7 @@ set.seed(252)
 source(here::here("scripts", 
                   "02-simulation.R"))
 
-get.bs <- function(B = 500) {
+get.sim <- function(B = 500) {
   rbindlist(lapply(1:B, function(b) {
     
     frm.sim <- generate_data()
@@ -453,36 +546,37 @@ get.bs <- function(B = 500) {
     ))
   }))}
 
-# frm.bs <- get.bs(1e3)
-# saveRDS(frm.bs, file = here::here("resources", "bootstrap_distribution.rds"))
+# frm_sim.bs <- get.sim(1e3)
+# saveRDS(frm_sim.bs, file = here::here("resources", "simulated_sampling-distribution.rds"))
 
 ```
 
 ```{r performance}
-frm.bs <- readRDS(file = here::here("resources", "bootstrap_distribution.rds"))
+frm_sim.bs <- readRDS(file = here::here("resources", "simulated_sampling-distribution.rds"))
 
 # tikz(here::here('resources', "bootstrap.tex"), standAlone = T, width = 5, height = 3)
-# rbindlist(lapply(c("TMLE", "IPTW", "G-comp"), function(x) {
-#   tmp <- frm.bs[,x, with = F]
-#   names(tmp) <- "Estimate"
-#   tmp}), idcol = T)[,.(
-#     Estimate, Method = factor(.id, labels = c("TMLE", "IPTW", "G-comp"))
-#   )] %>% ggplot(aes(x = Estimate, fill = Method)) +
-#   labs(y = "Density") +
-#   # geom_vline(xintercept = 0.39601) +
-#   geom_density(alpha = 0.5, color = NA) +
-#   theme_bw()
-# 
-# perf.tab <- sapply(frm.bs[,-'b'], function(x) {
-#   return(c(
-#     Bias = mean(x - 0.39601),
-#     Variance = var(x),
-#     MSE = mean(x - 0.39601)^2 + var(x)
-#   ))
-# })
+rbindlist(lapply(c("TMLE", "IPTW", "G-comp"), function(x) {
+  tmp <- frm_sim.bs[,x, with = F]
+  names(tmp) <- "Estimate"
+  tmp}), idcol = T)[,.(
+    Estimate, Method = factor(.id, labels = c("TMLE", "IPTW", "G-comp"))
+  )] %>% ggplot(aes(x = Estimate, fill = Method)) +
+  labs(y = "Density") +
+  geom_vline(xintercept = 0.39601) +
+  geom_density(alpha = 0.5, color = NA) +
+  theme_bw()
 # dev.off()
 # lualatex("bootstrap\\.tex", here::here('resources'))
 
-perf.tab %>% apply(2, function(x) {signif(x, 4)}) %>%
+perf.tab <- sapply(frm_sim.bs[,-'b'], function(x) {
+  return(c(
+    Bias = mean(x - 0.39601),
+    Variance = var(x),
+    MSE = mean(x - 0.39601)^2 + var(x)
+  ))
+})
+
+
+perf.tab %>% t %>% apply(2, function(x) {signif(x, 4)}) %>%
   xtable(auto = T) %>% print(include.rownames = T)
 ```
