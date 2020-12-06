@@ -203,12 +203,6 @@ summary(results_gcomp, "gcomp")
 
 set.seed(252)
 
-library(tidyverse)
-library(here)
-library(pander)
-library(tikzDevice)
-library(ltmle)
-
 # run Chen's script to make the simulated dataset
 source(here::here("scripts", 
                   "02-simulation.R"))
@@ -329,5 +323,140 @@ results_gcomp <- ltmleMSM(data = frm_for_ltmle,
 summary(results_iptw_tmle, "tmle")
 summary(results_iptw_tmle, "iptw")
 summary(results_gcomp, "gcomp")
+```
+
+```{r bootstrap, warning=F, message=F}
+
+set.seed(252)
+
+# run Chen's script to make the simulated dataset
+source(here::here("scripts", 
+                  "02-simulation.R"))
+
+get.bs <- function(B = 500) {
+  rbindlist(lapply(1:B, function(b) {
+    
+    frm.sim <- generate_data()
+    
+    # reorder data
+    frm_time_order <- frm.sim %>% 
+      select("sex", 
+             "educ", 
+             "age_1", 
+             "cigpday_1", 
+             "bmi_1", 
+             "chd_1", 
+             "hyperten_1", 
+             "cens_1",
+             "totchol_1", 
+             "stroke_1", 
+             "age_2", 
+             "cigpday_2", 
+             "bmi_2", 
+             "chd_2", 
+             "hyperten_2", 
+             "cens_2",
+             "totchol_2", 
+             "stroke_2", 
+             "age_3", 
+             "cigpday_3", 
+             "bmi_3", 
+             "chd_3", 
+             "hyperten_3", 
+             "cens_3",
+             "totchol_3", 
+             "stroke_3")
+    
+    # recode stroke to mimic survival (make it 1 permanently)
+    frm_for_ltmle <- frm_time_order %>% 
+      mutate(stroke_2 = ifelse(stroke_1 == 1, 
+                               1, 
+                               stroke_2), 
+             stroke_3 = ifelse(stroke_2 == 1, 
+                               1, 
+                               stroke_3))
+    
+    # set n equal to number of rows
+    n = nrow(frm.sim)
+    
+    # get iptw and tmle
+    results_iptw_tmle <- ltmleMSM(data = frm_for_ltmle, 
+                                  Anodes = c("totchol_1", 
+                                             "totchol_2", 
+                                             "totchol_3"), 
+                                  Lnodes = c("sex", 
+                                             "educ", 
+                                             "age_1", 
+                                             "cigpday_1", 
+                                             "bmi_1", 
+                                             "chd_1", 
+                                             "hyperten_1", 
+                                             "age_2", 
+                                             "cigpday_2", 
+                                             "bmi_2", 
+                                             "chd_2", 
+                                             "hyperten_2", 
+                                             "age_3", 
+                                             "cigpday_3", 
+                                             "bmi_3", 
+                                             "chd_3", 
+                                             "hyperten_3"), 
+                                  Cnodes = c("cens_1", 
+                                             "cens_2", 
+                                             "cens_3"),
+                                  Ynodes = Ynodes, 
+                                  survivalOutcome = TRUE, 
+                                  regimes = regimes,
+                                  summary.measures = summary.measures, 
+                                  final.Ynodes = Ynodes, 
+                                  working.msm = "Y ~ sum_chol")
+    
+    # get the gcomputation version
+    results_gcomp <- ltmleMSM(data = frm_for_ltmle, 
+                              Anodes = c("totchol_1", 
+                                         "totchol_2", 
+                                         "totchol_3"), 
+                              Lnodes = c("sex", 
+                                         "educ", 
+                                         "age_1", 
+                                         "cigpday_1", 
+                                         "bmi_1", 
+                                         "chd_1", 
+                                         "hyperten_1", 
+                                         "age_2", 
+                                         "cigpday_2", 
+                                         "bmi_2", 
+                                         "chd_2", 
+                                         "hyperten_2", 
+                                         "age_3", 
+                                         "cigpday_3", 
+                                         "bmi_3", 
+                                         "chd_3", 
+                                         "hyperten_3"), 
+                              Cnodes = c("cens_1", 
+                                         "cens_2", 
+                                         "cens_3"),
+                              Ynodes = Ynodes, 
+                              survivalOutcome = TRUE, 
+                              regimes = regimes,
+                              summary.measures = summary.measures, 
+                              final.Ynodes = Ynodes, 
+                              working.msm = "Y ~ sum_chol", 
+                              gcomp = TRUE)
+    
+    # display results
+    return(data.table(
+      "TMLE" = summary(results_iptw_tmle, "tmle")$cmat[2, 1],
+      "IPTW" = summary(results_iptw_tmle, "iptw")$cmat[2, 1],
+      "G-comp" = summary(results_gcomp, "gcomp")$cmat[2, 1],
+      b = b
+    ))
+  }))}
+
+# frm.bs <- get.bs(1e3)
+# saveRDS(frm.bs, file = here::here("resources", "boostrap_distribution.RDS"))
+
+frm.bs <- readRDS(file = here::here("resources", "boostrap_distribution.RDS"))
+
 ```
 
