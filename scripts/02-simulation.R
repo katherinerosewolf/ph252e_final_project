@@ -334,33 +334,33 @@ generate_data <- function(n = nrow(frm.wide),
 set.seed(252)
 frm.sim <- generate_data()
 
-# # Post-intervention data
-# Psi <- rbindlist(apply(
-# 	expand.grid(0:1, 0:1, 0:1), 1, function(a = c(0, 0, 1)) {
-#
-# 		a <- unlist(a)
-#
-# 		sim <- generate_data(n = 5e5,
-# 												 intervention_A_1 = a[1],
-# 												 intervention_A_2 = a[2],
-# 												 intervention_A_3 = a[3],
-# 												 intervention_C = 0)
-#
-# 		# sim[stroke_1 == 1, `:=`(totchol_2 = 0, totchol_3 = 0)]
-# 		# sim[stroke_2 == 1 & stroke_1 == 0, `:=`(totchol_3 = 0)]
-#
-# 		sim <- merge(
-# 			melt(sim[,.(`1` = totchol_1, `2` = totchol_2, `3` = totchol_3, randid = 1:.N)],
-# 			 id.vars = "randid", variable.name = "period", value.name = "totchol"),
-# 			melt(sim[,.(`1` = stroke_1, `2` = stroke_2, `3` = stroke_3, randid = 1:.N)],
-# 					 id.vars = "randid", variable.name = "period", value.name = "stroke"),
-# 			on = "randid")[,.(period, sum_chol = cumsum(totchol), stroke), by = .(randid)]
-#
-# 		sim <- sim[,-"randid", with = F]
-#
-# 		return(sim)
-# 	}))
-# saveRDS(Psi, here::here("resources", "psi_simulation.rds"))
+# Post-intervention data
+Psi <- rbindlist(apply(
+	expand.grid(0:1, 0:1, 0:1), 1, function(a = c(0, 0, 1)) {
+
+		a <- unlist(a)
+
+		sim <- generate_data(n = 5e5,
+												 intervention_A_1 = a[1],
+												 intervention_A_2 = a[2],
+												 intervention_A_3 = a[3],
+												 intervention_C = 0)
+
+		# sim[stroke_1 == 1, `:=`(totchol_2 = 0, totchol_3 = 0)]
+		# sim[stroke_2 == 1 & stroke_1 == 0, `:=`(totchol_3 = 0)]
+
+		sim <- merge(
+			melt(sim[,.(`1` = totchol_1, `2` = totchol_2, `3` = totchol_3, randid = 1:.N)],
+			 id.vars = "randid", variable.name = "period", value.name = "totchol"),
+			melt(sim[,.(`1` = stroke_1, `2` = stroke_2, `3` = stroke_3, randid = 1:.N)],
+					 id.vars = "randid", variable.name = "period", value.name = "stroke"),
+			on = "randid")[,.(period, sum_chol = cumsum(totchol), stroke), by = .(randid)]
+
+		sim <- sim[,-"randid", with = F]
+
+		return(sim)
+	}))
+saveRDS(Psi, here::here("resources", "psi_simulation.rds"))
 Psi <- readRDS(here::here("resources", "psi_simulation.rds"))
 
 summary(glm(stroke ~ sum_chol, "quasibinomial",

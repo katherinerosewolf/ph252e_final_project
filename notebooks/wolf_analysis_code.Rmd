@@ -195,10 +195,9 @@ results_gcomp <- ltmleMSM(data = frm_for_ltmle,
 summary(results_iptw_tmle, "tmle")
 summary(results_iptw_tmle, "iptw")
 summary(results_gcomp, "gcomp")
-
 ```
 
-```{r bootstrap-real, warning=F, message=F, eval = F}
+```{r bootstrap-real, warning=F, message=F, eval=T}
 get.bs <- function(B = 500, obs = frm_for_ltmle, n = nrow(frm_for_ltmle)) {
   rbindlist(lapply(1:B, function(b) {
     
@@ -281,7 +280,7 @@ frm.bs <- get.bs(1e3)
 saveRDS(frm.bs, file = here::here("resources", "bootstrap_distribution.rds"))
 ```
 
-```{r bootstra-variance}
+```{r bootstrap-variance}
 frm.bs <- readRDS(file = here::here("resources", "bootstrap_distribution.rds"))
 sapply(frm.bs[,-'b'], function(x) {
   return(c(
@@ -418,7 +417,7 @@ summary(results_iptw_tmle, "iptw")
 summary(results_gcomp, "gcomp")
 ```
 
-```{r simulation-performance, warning=F, message=F, eval=F}
+```{r simulation-performance, warning=F, message=F, eval=T}
 
 set.seed(252)
 
